@@ -1,0 +1,4 @@
+<http://fragments.dbpedia.org/2014/en#dataset> hydra:search [
+    ...
+    hydra:responseType tpf:TriplePatternQueryResponse.
+].
