@@ -24,7 +24,7 @@ without having to refer to external documentation.
 
 Based on the [Linked Data principles](cite:citesAsAuthority linkeddata) and the REST architectural style,
 the [Hydra Core Vocabulary](cite:citesAsAuthority hydra) was introduced with the aim of describing Web APIs
-using self-descriptive hypermedia controls so that clients can consume them in the same way as humans consume the Web.
+using self-descriptive hypermedia controls so that autonomous clients can consume them in the same way as humans consume the Web.
 This vocabulary is for example used in the [Triple Pattern Fragments (TPF)](cite:citesAsAuthority ldf) framework
 for describing triple pattern interfaces.
 TPF interfaces expose hypermedia controls that enable triple pattern queries on top of certain datasets.
@@ -38,7 +38,7 @@ which are in this case `'s'`, `'p'` and `'o'`, which respectively are an
 The `hydra:ExplicitRepresentation` variable representation indicates that the variable values
 can include type and language information when filled in.
 
-<figure id="tpf-controls" class="algorithm">
+<figure id="tpf-controls" class="listing">
 ````/code/tpf.txt````
 <figcaption markdown="block">
 Declarative triple pattern query control on the DBpedia TPF interface using the Hydra Core Vocabulary in TriG.
@@ -46,7 +46,7 @@ Declarative triple pattern query control on the DBpedia TPF interface using the 
 </figure>
 
 While the Hydra Core Vocabulary achieves the goal of describing the _input_ of hypermedia controls,
-it is not capable of describing what kind of _output_ it will return.
+it is not capable of describing what kind of _output_ it will return based on these the given parameters.
 In the case of TPF, the subject, predicate and object IRI parameters are described,
 but it is nowhere described that the interface necessarily performs a triple pattern query on the dataset using these parameters.
 The server could for example return the _negation_ of the give triple pattern query on that dataset instead,
