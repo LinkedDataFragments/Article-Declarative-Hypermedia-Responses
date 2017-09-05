@@ -56,4 +56,4 @@ In this article, we introduce and compare different approaches
 for describing the responses of such hypermedia-driven API responses.
 We discuss approaches based on custom vocabularies,
 the recent W3C recommendation [SHACL](cite:citesAsAuthority spec:shacl),
-and the [SPIN modeling vocabulary](cite:citesAsAuthority spin).
+and the [SPIN modeling vocabulary](cite:citesAsAuthority spec:spin).

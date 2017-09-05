@@ -1,4 +1,4 @@
-## Approaches
+## Response Declaration Approaches
 {:#approaches}
 
 In this section, we discuss and compare different approaches
@@ -10,7 +10,7 @@ to describe the responses to triple pattern queries.
 
 We categorize our three categories,
 which will be explained hereafter:
-Custom types, SHACL shapes, and SPARQL query mapping.
+Custom types, SHACL shapes, and SPIN SPARQL queries.
 
 ### Custom Types
 
@@ -68,4 +68,35 @@ Furthermore, the expressivity from the SPARQL query language and JavaScript are 
 the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints){:.mandatory}
 and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
 
-### SPARQL Query Mapping
+### SPIN SPARQL Queries
+
+The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
+to SHACL for specifying rules and constraints.
+It is more lightweight than SHACL, but thereby also less expressive.
+The SPIN vocabulary is based on the SPARQL query language for defining these constraints.
+
+SPIN allows SPARQL queries to be defined in a triple representation,
+something which SHACL does not support.
+The advantage of triple-based representations over text-based is that RDF-based tools
+can directly use and work with these structures, such as reasoners and query engines.
+The disadvantage of triple-based representations is that they are typically
+more verbose than their text-based variant.
+
+As our TPF use case requires the representation of a triple pattern query,
+we can again trivially represent this as a SPARQL SELECT query using SPIN,
+as shown in [](#approach-spin).
+
+<figure id="approach-spin" class="listing">
+````/code/approach-spin.txt````
+<figcaption markdown="block">
+Triple pattern query response declaration using a SPARQL SELECT query using the SPIN vocabulary.
+</figcaption>
+</figure>
+
+As mentioned before, the SPIN-based query in [](#approach-spin) is indeed
+more verbose than the SHACL-SPARQL SELECT query from [](#approach-shacl).
+That is because SPIN requires a reified representation of triple patterns,
+which leads to a large amount of triples, even for simple queries.
+
+As our subject, predicate and object variables are now represented as actual resources,
+they are explicitly linked with the Hydra variables, which is a semantic advantage.
