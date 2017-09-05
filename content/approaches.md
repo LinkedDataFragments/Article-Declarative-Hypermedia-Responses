@@ -8,9 +8,9 @@ For this, we will extend from the hypermedia control from [](#tpf-controls),
 which currently describes the interface input parameters,
 to describe the responses to triple pattern queries.
 
-We categorize our four categories,
+We categorize our three categories,
 which will be explained hereafter:
-Custom types, SHACL shapes, OWL restrictions, and SPARQL query mapping.
+Custom types, SHACL shapes, and SPARQL query mapping.
 
 ### Custom Types
 
@@ -67,7 +67,5 @@ In summary, SHACL shapes are very expressive for declaring responses of Web APIs
 Furthermore, the expressivity from the SPARQL query language and JavaScript are inherited thanks to
 the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints){:.mandatory}
 and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
-
-### OWL Restrictions
 
 ### SPARQL Query Mapping
