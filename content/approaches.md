@@ -40,6 +40,7 @@ Model criteria scores:
 * Adoption: Low
 
 ### SHACL Shapes
+{:#approach-shacl}
 
 The recent [SHACL](cite:citesAsAuthority spec:shacl) W3C recommendation allows
 RDF shapes to be defined for constraint checking and validation.
