@@ -8,9 +8,9 @@ For this, we will extend from the hypermedia control from [](#tpf-controls),
 which currently describes the interface input parameters,
 to describe the responses to triple pattern queries.
 
-We categorize our three categories,
-which will be explained hereafter:
+The three approaches that will be explained hereafter are
 Custom types, SHACL shapes, and SPIN SPARQL queries.
+For each approach, we will provide a score for the model criteria from [](#comparison-model).
 
 ### Custom Types
 
@@ -32,6 +32,12 @@ For one, as each response type requires a separate RDF type,
 clients implement have explicit support for each of these potentially huge number of types.
 Instead of small functional building blocks that can be reused,
 service providers would have to define new types for each interface that offers different functionality.
+
+Model criteria scores:
+
+* Reification: Low
+* Expressivity: Low
+* Adoption: Low
 
 ### SHACL Shapes
 
@@ -68,6 +74,12 @@ Furthermore, the expressivity from the SPARQL query language and JavaScript are 
 the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints){:.mandatory}
 and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
 
+Model criteria scores:
+
+* Reification: Medium
+* Expressivity: High
+* Adoption: High
+
 ### SPIN SPARQL Queries
 
 The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
@@ -100,3 +112,9 @@ which leads to a large amount of triples, even for simple queries.
 
 As our subject, predicate and object variables are now represented as actual resources,
 they are explicitly linked with the Hydra variables, which is a semantic advantage.
+
+Model criteria scores:
+
+* Reification: High
+* Expressivity: Medium
+* Adoption: Medium
