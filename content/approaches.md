@@ -32,8 +32,10 @@ For one, as each response type requires a separate RDF type,
 clients implement have explicit support for each of these potentially huge number of types.
 Instead of small functional building blocks that can be reused,
 service providers would have to define new types for each interface that offers different functionality.
+<span class="comment" data-author="RV">Excellent.</span>
 
 Model criteria scores:
+<span class="comment" data-author="RV">good, but have this in a comparison table</span>
 
 * Reification: Low
 * Expressivity: Low

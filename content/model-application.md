@@ -1,5 +1,6 @@
 ## Model Application
 {:#model-application}
+<span class="comment" data-author="RV">I think there is much more room for nuance here. There's not a clear winner, there are circumstances. I would not have <q>our list</q> in here, but rather make this into a <q>Discussion</q> section where we provide different arguments. A lot of the Web works like custom types. It is just not sustainable at the moment.</span>
 
 In this section, we propose a general suggestion for which approach to use for declaratively representing Web API responses.
 Based on our model from [](#comparison-model), there are different ways for choosing between the discussed approaches from [](#approaches).

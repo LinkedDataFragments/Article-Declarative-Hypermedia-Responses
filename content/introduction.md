@@ -1,16 +1,17 @@
 ## Introduction
 {:#introduction}
-
+<del class="comment">
 The Web has become the most important global knowledge base for humanity.
 This is partly because of the simple concepts our Web is build upon,
 which makes it simple for humans to understand and browse.
+</del>
 
 This _human_ interface is only one of the possible Web interfaces that exist.
-Next to humans, machines are also heavily making use of the Web,
-through the use of Web Application Programming Interfaces (APIs).
+Next to humans, machines also heavily make use of the Web,
+through Web Application Programming Interfaces (Web APIs).
 Two architectural styles for Web APIs can be distinguished.
-First, some APIs are based on the concept of remote-procedure-calling (RPC),
-in which HTTP calls correspond to procedure or method calls of internal programs.
+First, some APIs are based on the concept of Remote Procedure Calling (RPC),
+in which HTTP requests correspond to procedure or method calls of internal programs.
 Second, other APIs are based are based on [Representational State Transfer (REST)](cite:citesAsAuthority rest),
 in which HTTP resources are linked and described to each other,
 simular to how the human web works.
@@ -25,6 +26,7 @@ without having to refer to external documentation.
 Based on the [Linked Data principles](cite:citesAsAuthority linkeddata) and the REST architectural style,
 the [Hydra Core Vocabulary](cite:citesAsAuthority hydra) was introduced with the aim of describing Web APIs
 using self-descriptive hypermedia controls so that autonomous clients can consume them in the same way as humans consume the Web.
+<span class="comment" data-author="RV">Yes, that's correct, but there's only a small class of people who will get that. Write for a broader audience. <q>One part of the Hydra Core vocabulary, in essence, focuses on representing HTML controls as Linked Data for machines.</q> You can also get inspiration from <a href="http://dret.net/lectures/ppos-spring11/reading/HypermediaTypes.pdf">Mike Amundsen's Hypermedia Factors</a>: argue which factors RDF has by nature, and which are added by Hydra.</span>
 This vocabulary is for example used in the [Triple Pattern Fragments (TPF)](cite:citesAsAuthority ldf) framework
 for describing triple pattern interfaces.
 TPF interfaces expose hypermedia controls that enable triple pattern queries on top of certain datasets.
@@ -38,6 +40,19 @@ which are in this case `'s'`, `'p'` and `'o'`, which respectively are an
 The `hydra:ExplicitRepresentation` variable representation indicates that the variable values
 can include type and language information when filled in.
 
+<span class="comment" data-author="RV">
+Okay, we need to have a clear <strong>before</strong> and <strong>after</strong> here,
+and maybe even two sections of these!
+First, we need to explain the situation before and after Hydra.
+Before Hydra, clients need a hard-coded API contract.
+After Hydra, the client can understand
+<q>by making this request, I can search this collection by supplying these parameters in this way.</q>
+Then, we need a before and after of what we will be adding!
+Before: clients do not know how exactly these parameters will be used.
+After: clients understand exactly how these parameters contribute to the response,
+(and what this response will be structured like?).
+</span>
+
 <figure id="tpf-controls" class="listing">
 ````/code/tpf.txt````
 <figcaption markdown="block">
@@ -47,6 +62,9 @@ Declarative triple pattern query control on the DBpedia TPF interface using the 
 
 While the Hydra Core Vocabulary achieves the goal of describing the _input_ of hypermedia controls,
 it is not capable of describing what kind of _output_ it will return based on these the given parameters.
+<span class="comment" data-author="RV">
+So yes, correct, but I think we need to split it out much more, as suggested above.
+</span>
 In the case of TPF, the subject, predicate and object IRI parameters are described,
 but it is nowhere described that the interface necessarily performs a triple pattern query on the dataset using these parameters.
 The server could for example return the _negation_ of the give triple pattern query on that dataset instead,
