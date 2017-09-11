@@ -1,21 +1,16 @@
 ## Introduction
 {:#introduction}
-<del class="comment">
-The Web has become the most important global knowledge base for humanity.
-This is partly because of the simple concepts our Web is build upon,
-which makes it simple for humans to understand and browse.
-</del>
-
+Humans can browse the Web by following _links_ from one page to another.
 This _human_ interface is only one of the possible Web interfaces that exist.
-Next to humans, machines also heavily make use of the Web,
+Next to humans, machines also heavily make use of the Web
 through Web Application Programming Interfaces (Web APIs).
 Two architectural styles for Web APIs can be distinguished.
 First, some APIs are based on the concept of Remote Procedure Calling (RPC),
 in which HTTP requests correspond to procedure or method calls of internal programs.
-Second, other APIs are based are based on [Representational State Transfer (REST)](cite:citesAsAuthority rest),
+Second, other APIs are based on [Representational State Transfer (REST)](cite:citesAsAuthority rest),
 in which HTTP resources are linked and described to each other,
 simular to how the human web works.
-_Hypermedia controls_ are used to declaratively instruct clients
+In the case of REST, _hypermedia controls_ are used to declaratively instruct clients
 on how they can use an interface.
 An advantage of REST over RPC is that these hypermedia controls
 are self-descriptive, and can be reused across different interfaces.
@@ -23,12 +18,20 @@ Once they are implemented, clients can automatically interact interfaces
 using these self-descriptive hypermedia controls
 without having to refer to external documentation.
 
-Based on the [Linked Data principles](cite:citesAsAuthority linkeddata) and the REST architectural style,
-the [Hydra Core Vocabulary](cite:citesAsAuthority hydra) was introduced with the aim of describing Web APIs
-using self-descriptive hypermedia controls so that autonomous clients can consume them in the same way as humans consume the Web.
-<span class="comment" data-author="RV">Yes, that's correct, but there's only a small class of people who will get that. Write for a broader audience. <q>One part of the Hydra Core vocabulary, in essence, focuses on representing HTML controls as Linked Data for machines.</q> You can also get inspiration from <a href="http://dret.net/lectures/ppos-spring11/reading/HypermediaTypes.pdf">Mike Amundsen's Hypermedia Factors</a>: argue which factors RDF has by nature, and which are added by Hydra.</span>
+According to the [Linked Data principles](cite:citesAsAuthority linkeddata),
+HTTP URIs should be used browse the Semantic Web, which can be seen as _the Web for machines_.
+As the [RDF](cite:citesAsAuthority spec:rdf) data model uses URIs as primary data element,
+hypermedia controls can be encoded using this model, so that machines can use and understand them.
+Amundsen identifies nine [_"Hypermedia Factors"_](cite:citesAsAuthority hypermediatypes)
+that can be used to describe hypermedia behaviors.
+While RDF natively supports the first hypermedia factor, i.e., _outbound links_,
+it provides no support for more advanced _templated links_.
+The latter corresponds to HTML forms on Web pages, such as a form for searching books through a library's website.
+One part of the [Hydra Core Vocabulary](cite:citesAsAuthority hydra) attempts to fill this gap
+by representing HTML controls as Linked Data for machines.
+
 This vocabulary is for example used in the [Triple Pattern Fragments (TPF)](cite:citesAsAuthority ldf) framework
-for describing triple pattern interfaces.
+for describing triple pattern query interfaces.
 TPF interfaces expose hypermedia controls that enable triple pattern queries on top of certain datasets.
 This allows clients to consume data from datasets that are exposed behind TPF interfaces using these self-descriptive controls,
 as shown in [](#tpf-controls).
@@ -40,19 +43,6 @@ which are in this case `'s'`, `'p'` and `'o'`, which respectively are an
 The `hydra:ExplicitRepresentation` variable representation indicates that the variable values
 can include type and language information when filled in.
 
-<span class="comment" data-author="RV">
-Okay, we need to have a clear <strong>before</strong> and <strong>after</strong> here,
-and maybe even two sections of these!
-First, we need to explain the situation before and after Hydra.
-Before Hydra, clients need a hard-coded API contract.
-After Hydra, the client can understand
-<q>by making this request, I can search this collection by supplying these parameters in this way.</q>
-Then, we need a before and after of what we will be adding!
-Before: clients do not know how exactly these parameters will be used.
-After: clients understand exactly how these parameters contribute to the response,
-(and what this response will be structured like?).
-</span>
-
 <figure id="tpf-controls" class="listing">
 ````/code/tpf.txt````
 <figcaption markdown="block">
@@ -60,14 +50,20 @@ Declarative triple pattern query control on the DBpedia TPF interface using the 
 </figcaption>
 </figure>
 
-While the Hydra Core Vocabulary achieves the goal of describing the _input_ of hypermedia controls,
-it is not capable of describing what kind of _output_ it will return based on these the given parameters.
-<span class="comment" data-author="RV">
-So yes, correct, but I think we need to split it out much more, as suggested above.
-</span>
-In the case of TPF, the subject, predicate and object IRI parameters are described,
+Without the Hydra Core Vocabulary, clients would need a hard-coded API contract.
+But _with_ it, clients can automatically understand that by providing a certain set of parameters,
+a certain request to the API can be made.
+However, the Hydra Core Vocabulary is not capable of describing the link's [_control data_](cite:cites hypermediatypes)
+on _how_ these parameters will be used,
+i.e., what kind of response will be returned based on the given request.
+In order to reach smarter clients, they also need to know in what way the parameters
+will contribute to the response.
+This would not only allow clients to derive the parameters that have to be used to perform a certain request,
+but also how the parameters are used to form the response.
+
+In the case of TPF for example, the subject, predicate and object IRI parameters are described,
 but it is nowhere described that the interface necessarily performs a triple pattern query on the dataset using these parameters.
-The server could for example return the _negation_ of the give triple pattern query on that dataset instead,
+The server could for example return the _negation_ of the given triple pattern query on that dataset instead,
 as there is no provided method for distinguishing between these different behaviours with the same input parameters.
 
 In this article, we introduce and compare different approaches
