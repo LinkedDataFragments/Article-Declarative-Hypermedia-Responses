@@ -1,18 +1,13 @@
 ## Abstract
 <!-- Context      -->
-<del class="comment">The Web is the main driver of the exchange of information.</del>
 While humans browse the Web by following links,
-hypermedia is <span class="grammar">the equivalent that machines for browsing.</span>
+hypermedia is the equivalent that machines use for browsing.
 While efforts such as Hydra exist for semantically describing hypermedia controls,
-they are limited to describing the input parameters to interfaces.
+they are limited to describing the input parameters to interfaces,
+and clients therefore do not know what response to expect these interfaces.
 <!-- Need         -->
-<span class="grammar">
-In order to make it possible for clients to autonomously detect what responses certain interfaces
-can return based on certain parameters.
-</span>
-These interfaces need to declaratively define what the response structure
-for certain controls is in terms of certain parameters.
-<span class="comment" data-author="RV">I think we need to nail the need more precisely and clearly. It's too obfuscated now. Consider direct language like: machines know what parameters to send, but not what response to expect.</span>
+As such, interfaces need to declaratively describe the response structure
+of their parameterized controls.
 <!-- Task         -->
 For this, a vocabulary is needed to represent this parameterized response structure
 in a generic, but expressive way.
