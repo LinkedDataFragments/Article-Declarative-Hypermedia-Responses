@@ -9,10 +9,6 @@ Each response representation approach can receive a qualitative score for each o
 A suitable approach can then be chosen based on the composite score across these criteria,
 which can possibly be weighted depending on the relative importance of these criteria in the use case.
 
-<span class="comment" data-author="RV">I've got more criteria: <em>composability</em> and <em>extensibility</em>. Do you think these are already covered? If we consider APIs as consisting of <a href="https://arxiv.org/pdf/1609.07108v2.pdf">features</a>, then we need to ensure that hypermedia controls are composable. Maybe this is the case for hypermedia controls in general, although I wonder whether types would have any limitation regarding composability. For sure, types have a major problem with composability, as they are only one-directional.</span>
-
-<span class="comment" data-author="RV">Also, easy of <em>discovery</em> should be tackled! This can be a part of expressivity, but on second thoughts, maybe not, since both are not necessarily opposites. Custom types are really easy to discover, so this should definitely be visible in a comparison table. See also my comment in the conclusion.</span>
-
 ### Reification
 
 The level of reification, i.e., how 'deep' the response structure is represented in RDF,
@@ -48,6 +44,29 @@ but also for server-side declaration generation if this would happen dynamically
 Expressivity and simplicity of usage are contradicting criteria, so a trade-off between these two must be sought out.
 The Assembly language is for example very expressive, but its low level of abstraction would make it complex to use.
 <span class="comment" data-author="RV">I follow the line of that last argument, but it should be played out more precisely.</span>
+
+### Composability
+
+Just like a [feature-based interface](cite:citesAsAuthority webapifeatures),
+response structures could be made up of multiple smaller reusable components that can be _composed_ and _extended_.
+This allows clients to only be required to understand these smaller components,
+and this could allow more complex composed response types to be interpreted automatically.
+Different techniques can lead to different levels of composability.
+
+A certain Web API could for example return a list of people based on a certain query.
+Another similar Web API could annotate all these people with their place of birth,
+which can be seen as an _extension_ to the first API,
+or a _composition_ of the 'query' feature and the 'annotation' feature.
+Another composition could for example apply some kind of _sorting_ or _filtering_ feature,
+possibly based on certain parameters.
+
+### Discoverability
+
+Certain techniques for declaring response structure are more easily _discoverable_ than others,
+meaning that based on the technique,
+clients may require more or less effort for _finding_ and _interpreting_ the response structure.
+A single text-based identifier for a reponse structure could for example be very simple for clients to detect,
+while a reference to the source code that is used to control the Web API requires much more effort from the client.
 
 ### Adoption
 

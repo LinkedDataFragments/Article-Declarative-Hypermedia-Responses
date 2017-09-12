@@ -27,6 +27,7 @@ Triple pattern query response declaration using a custom `tpf:TriplePatternQuery
 </figure>
 
 While this approach may seem very simple to setup at first sight,
+which also makes it easily _discoverable_,
 it has some significant disadvantages.
 For one, as each response type requires a separate RDF type,
 clients implement have explicit support for each of these potentially huge number of types.
@@ -39,13 +40,15 @@ Model criteria scores:
 
 * Reification: Low
 * Expressivity: Low
+* Composability: Low
+* Discoverability: High
 * Adoption: Low
 
 ### SHACL Shapes
 {:#approach-shacl}
 
 The recent [SHACL](cite:citesAsAuthority spec:shacl) W3C recommendation allows
-RDF shapes to be defined for constraint checking and validation.
+RDF shapes to be defined and composed for constraint checking and validation.
 Instead of validating shapes, we can also use SHACL to describe the shape of our responses.
 
 In our TPF use case, we could make our search form a parameterizable shape,
@@ -81,6 +84,8 @@ Model criteria scores:
 
 * Reification: Medium
 * Expressivity: High
+* Composability: High
+* Discoverability: Medium
 * Adoption: High
 
 ### SPIN SPARQL Queries
@@ -88,7 +93,8 @@ Model criteria scores:
 The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
 to SHACL for specifying rules and constraints.
 It is more lightweight than SHACL, but thereby also less expressive.
-The SPIN vocabulary is based on the SPARQL query language for defining these constraints.
+The SPIN vocabulary is based on the SPARQL query language for defining these constraints,
+where triple patterns can be composed as graph patterns, which in turn can be composed as more complex graph patterns.
 
 SPIN allows SPARQL queries to be defined in a triple representation,
 something which SHACL does not support.
@@ -120,4 +126,6 @@ Model criteria scores:
 
 * Reification: High
 * Expressivity: Medium
+* Composability: Medium
+* Discoverability: Medium
 * Adoption: Medium
