@@ -2,8 +2,8 @@
 {:#comparison-model}
 
 In this section, we introduce a simple model for comparing approaches for declaratively representing Web API responses.
-Our model consists of different criteria: _reification_, _expressivity_ and _adoptability_.
-<span class="comment" data-author="RV">How are these criteria? This is not obvious for the first one.</span>
+Our model consists of different criteria that can influence the choice of a certain approach:
+_reification_, _expressivity_, _composability_, _discoverability_ and _adoptability_.
 These will be explained hereafter.
 Each response representation approach can receive a qualitative score for each of these criteria.
 A suitable approach can then be chosen based on the composite score across these criteria,
