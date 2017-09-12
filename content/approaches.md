@@ -42,7 +42,7 @@ Model criteria scores:
 * Expressivity: Low
 * Composability: Low
 * Discoverability: High
-* Adoption: Low
+* Adoptability: Low
 
 ### SHACL Shapes
 {:#approach-shacl}
@@ -86,7 +86,7 @@ Model criteria scores:
 * Expressivity: High
 * Composability: High
 * Discoverability: Medium
-* Adoption: High
+* Adoptability: High
 
 ### SPIN SPARQL Queries
 
@@ -128,4 +128,4 @@ Model criteria scores:
 * Expressivity: Medium
 * Composability: Medium
 * Discoverability: Medium
-* Adoption: Medium
+* Adoptability: Medium

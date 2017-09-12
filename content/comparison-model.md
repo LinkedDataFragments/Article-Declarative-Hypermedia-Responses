@@ -2,7 +2,7 @@
 {:#comparison-model}
 
 In this section, we introduce a simple model for comparing approaches for declaratively representing Web API responses.
-Our model consists of different criteria: _reification_, _expressivity_ and _adoption_.
+Our model consists of different criteria: _reification_, _expressivity_ and _adoptability_.
 <span class="comment" data-author="RV">How are these criteria? This is not obvious for the first one.</span>
 These will be explained hereafter.
 Each response representation approach can receive a qualitative score for each of these criteria.
@@ -68,7 +68,7 @@ clients may require more or less effort for _finding_ and _interpreting_ the res
 A single text-based identifier for a reponse structure could for example be very simple for clients to detect,
 while a reference to the source code that is used to control the Web API requires much more effort from the client.
 
-### Adoption
+### Adoptability
 
 While different approaches for Web API response types exist,
 the used technologies behind these approaches will have an impact on the adoption rate.
