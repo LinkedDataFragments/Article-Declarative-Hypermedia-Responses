@@ -23,26 +23,28 @@ can more easily do this using the reified RDF representation than the string lit
 
 ### Expressivity
 
-Vocabularies for declaring response types can exist at different levels of expressivity.
-One vocabulary may only enable simple triple pattern queries to be represented,
+The expressivity of an approach for response declaration of an interface
+corresponds to the range of responses that can be declared using this approach.
+
+According to the REST principles and the layered architectural style,
+clients should require no prior knowledge
+about interface functionality except for the agreed-upon primitives.
+Simple and few primitives on the one hand lower the barrier for client support,
+such as the eight well known [HTTP](cite:citesAsAuthority http) methods.
+These primitives should however be sufficiently expressive,
+as to allow more advanced operations to be defined on top of them.
+Many complex and expressive primitives on the other hand
+make it more complex for clients to support them,
+but when they are supported, complex operations can more easily be interpreted by clients.
+
+In the case of declaring interface responses,
+vocabularies can exist at different levels of expressivity.
+One vocabulary may for example only enable simple triple pattern queries to be represented,
 which may be simple for a client to parse and handle, but is not very expressive.
 Another vocabulary may enable full SPARQL queries to be represented,
 which may be more complex for a client to use, but is much more expressive.
-
-According to the REST principles, clients should require no prior knowledge
-about interface functionality except for the agreed-upon primitives.
-These primitives should be as simple as possible,
-to lower the barrier for clients to support these primitives,
-such as the eight well known [HTTP](cite:citesAsAuthority http) methods.
-If a server exposes certain specific functionality,
-clients should be able to interpret and make use of this specific functionality without requiring explicit implementation of it.
-Therefore, the approach should be as expressive as possible.
-
-Higher expressivity does however typically lead to higher complexity for client-side parsing and usage,
-but also for server-side declaration generation if this would happen dynamically at runtime.
-Expressivity and simplicity of usage are contradicting criteria, so a trade-off between these two must be sought out.
-The Assembly language is for example very expressive, but its low level of abstraction would make it complex to use.
-<span class="comment" data-author="RV">I follow the line of that last argument, but it should be played out more precisely.</span>
+By following the REST principles, a well defined restricted vocabulary should be agreed upon
+using which, potentially complex, response types can be declared.
 
 ### Composability
 
