@@ -17,6 +17,9 @@ are self-descriptive, and can be reused across different interfaces.
 Once they are implemented, clients can automatically interact interfaces
 using these self-descriptive hypermedia controls
 without having to refer to external documentation.
+Self-descriptiveness is however a relative notion,
+because it requires a set of primitives that need to be agreed upon,
+which typically are [HTTP](cite:citesAsAuthority http) methods such as GET and POST in the case of RESTful applications.
 
 According to the [Linked Data principles](cite:citesAsAuthority linkeddata),
 HTTP URIs should be used browse the Semantic Web, which can be seen as _the Web for machines_.

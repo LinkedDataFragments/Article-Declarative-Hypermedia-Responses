@@ -29,11 +29,13 @@ which may be simple for a client to parse and handle, but is not very expressive
 Another vocabulary may enable full SPARQL queries to be represented,
 which may be more complex for a client to use, but is much more expressive.
 
-According to the REST principles, clients should require no prior knowledge about interface functionality.
-<span class="comment" data-author="RV">This is tricky. Self-descriptiveness is a relative notion; it all depends on the primitives you agree on. These can be narrow or broad.</span>
-<span class="comment" data-author="RV">Let's actually have <q>Self-descriptiveness is a relative notion</q> in this article, together with the corresponding argument, I don't have that quote citable yet anywhere.</span>
-If a server exposes certain functionality,
-clients should be able to interpret and make use of this functionality without requiring explicit implementation of it.
+According to the REST principles, clients should require no prior knowledge
+about interface functionality except for the agreed-upon primitives.
+These primitives should be as simple as possible,
+to lower the barrier for clients to support these primitives,
+such as the eight well known [HTTP](cite:citesAsAuthority http) methods.
+If a server exposes certain specific functionality,
+clients should be able to interpret and make use of this specific functionality without requiring explicit implementation of it.
 Therefore, the approach should be as expressive as possible.
 
 Higher expressivity does however typically lead to higher complexity for client-side parsing and usage,
