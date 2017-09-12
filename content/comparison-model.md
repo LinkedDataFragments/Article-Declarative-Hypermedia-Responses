@@ -17,9 +17,7 @@ has an influence on how easy such a representation can be used by RDF-based tool
 
 A SPARQL query could for example be represented as an RDF string literal,
 or fully reified using the SPIN vocabulary.
-<span class="comment" data-author="RV">This thinking is good!</span>
-Both approaches have the same meaning, but the former representation is simpler,
-<span class="comment" data-author="RV">try arguing <q>simpler</q> better, perhaps using a more precise term</span>
+Both approaches have the same meaning, but the former representation requires less effort to represent in RDF,
 while the latter provides better compatibility with RDF-based tools, such as reasoners and query engines.
 If a subset of such a SPARQL query needs to be taken, an RDF reasoner or query engine
 can more easily do this using the reified RDF representation than the string literal.
