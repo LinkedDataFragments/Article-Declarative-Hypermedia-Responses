@@ -17,7 +17,7 @@ which are summarized in [](#model-scores).
 
 | Criterion       | Custom Types | SHACL | SPIN |
 | --------------- |:------------:|:-----:|:----:| 
-| Reification     | ◯            | ◑     | ◉    |
+| RDF Complexity  | ◯            | ◑     | ◉    |
 | Expressivity    | ◯            | ◉     | ◑    |
 | Composability   | ◯            | ◉     | ◉    |
 | Discoverability | ◉            | ◑     | ◑    |

@@ -3,17 +3,16 @@
 
 In this section, we introduce a simple model for comparing approaches for declaratively representing Web API responses.
 Our model consists of different criteria that can influence the choice of a certain approach:
-_reification_, _expressivity_, _composability_, _discoverability_ and _adoptability_.
+_RDF complexity_, _expressivity_, _composability_, _discoverability_ and _adoptability_.
 These will be explained hereafter.
 Each response representation approach can receive a qualitative score for each of these criteria.
 A suitable approach can then be chosen based on the composite score across these criteria,
 which can possibly be weighted depending on the relative importance of these criteria in the use case.
 
-### Reification
+### RDF Complexity
 
-The level of reification, i.e., how 'deep' the response structure is represented in RDF,
-<span class="comment" data-author="RV">Mmm, I think we need a new term. Maybe something like <q>nesting</q> or <q>abstraction level</q>. <q>Reification (level)</q> is weird to have as a criterion, the term will be understood differently.</span>
-has an influence on how easy such a representation can be used by RDF-based tools.
+The level of RDF complexity, i.e., how 'deep' the response structure is represented in RDF,
+has an influence on how easily such a representation can be used by RDF-based tools.
 
 A SPARQL query could for example be represented as an RDF string literal,
 or fully reified using the SPIN vocabulary.
