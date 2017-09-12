@@ -10,7 +10,24 @@ to describe the responses to triple pattern queries.
 
 The three approaches that will be explained hereafter are
 Custom types, SHACL shapes, and SPIN SPARQL queries.
-For each approach, we will provide a score for the model criteria from [](#comparison-model).
+For each approach, we will provide a score for the model criteria from [](#comparison-model),
+which are summarized in [](#model-scores).
+
+<figure id="model-scores" class="table" markdown="1">
+
+| Criterion       | Custom Types | SHACL | SPIN |
+| --------------- |:------------:|:-----:|:----:| 
+| Reification     | ◯            | ◑     | ◉    |
+| Expressivity    | ◯            | ◉     | ◑    |
+| Composability   | ◯            | ◉     | ◉    |
+| Discoverability | ◉            | ◑     | ◑    |
+| Adoptability    | ◯            | ◉     | ◑    |
+
+<figcaption markdown="block">
+Qualitative scores (low ◯, medium ◑, high ◉) for three different approaches for
+declaring interface responses based on the model from [](#comparison-model).
+</figcaption>
+</figure>
 
 ### Custom Types
 
@@ -33,16 +50,6 @@ For one, as each response type requires a separate RDF type,
 clients implement have explicit support for each of these potentially huge number of types.
 Instead of small functional building blocks that can be reused,
 service providers would have to define new types for each interface that offers different functionality.
-<span class="comment" data-author="RV">Excellent.</span>
-
-Model criteria scores:
-<span class="comment" data-author="RV">good, but have this in a comparison table</span>
-
-* Reification: Low
-* Expressivity: Low
-* Composability: Low
-* Discoverability: High
-* Adoptability: Low
 
 ### SHACL Shapes
 {:#approach-shacl}
@@ -80,14 +87,6 @@ Furthermore, the expressivity from the SPARQL query language and JavaScript are 
 the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints){:.mandatory}
 and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
 
-Model criteria scores:
-
-* Reification: Medium
-* Expressivity: High
-* Composability: High
-* Discoverability: Medium
-* Adoptability: High
-
 ### SPIN SPARQL Queries
 
 The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
@@ -121,11 +120,3 @@ which leads to a large amount of triples, even for simple queries.
 
 As our subject, predicate and object variables are now represented as actual resources,
 they are explicitly linked with the Hydra variables, which is a semantic advantage.
-
-Model criteria scores:
-
-* Reification: High
-* Expressivity: Medium
-* Composability: Medium
-* Discoverability: Medium
-* Adoptability: Medium
