@@ -8,23 +8,23 @@ For this, we will extend from the hypermedia control from [](#tpf-controls),
 which currently describes the interface input parameters,
 to describe the responses to triple pattern queries.
 
-The three approaches that will be explained hereafter are
-Custom types, SHACL shapes, and SPIN SPARQL queries.
+The four approaches that will be explained hereafter are
+Custom types, SHACL shapes, SPIN SPARQL queries and OWL restrictions.
 For each approach, we will provide a score for the model criteria from [](#comparison-model),
 which are summarized in [](#model-scores).
 
 <figure id="model-scores" class="table" markdown="1">
 
-| Criterion       | Custom Types | SHACL | SPIN |
-| --------------- |:------------:|:-----:|:----:| 
-| RDF Complexity  | ◯            | ◑     | ◉    |
-| Expressivity    | ◯            | ◉     | ◑    |
-| Composability   | ◯            | ◉     | ◉    |
-| Discoverability | ◉            | ◑     | ◑    |
-| Adoptability    | ◯            | ◉     | ◑    |
+| Criterion       | Custom Types | SHACL | SPIN | OWL |
+| --------------- |:------------:|:-----:|:----:|:---:|
+| RDF Complexity  | ◯            | ◑     | ◉    | ◉   |
+| Expressivity    | ◯            | ◉     | ◑    | ☉   |
+| Composability   | ◯            | ◉     | ◉    | ◉   |
+| Discoverability | ◉            | ◑     | ◑    | ◑   |
+| Adoptability    | ◯            | ◉     | ◑    | ◉   |
 
 <figcaption markdown="block">
-Qualitative scores (low ◯, medium ◑, high ◉) for three different approaches for
+Qualitative scores (very low ◯, low ☉, medium ◑, high ◉) for three different approaches for
 declaring interface responses based on the model from [](#comparison-model).
 </figcaption>
 </figure>
@@ -54,10 +54,8 @@ service providers would have to define new types for each interface that offers 
 ### SHACL Shapes
 {:#approach-shacl}
 
-The recent [SHACL](cite:citesAsAuthority spec:shacl) W3C recommendation allows
-RDF shapes to be defined and composed for constraint checking and validation.
-Instead of validating shapes, we can also use SHACL to describe the shape of our responses.
-
+While the SHACL vocabulary is primarily used for defining shape constraints,
+we can also use SHACL to describe the shape of our responses.
 In our TPF use case, we could make our search form a parameterizable shape,
 and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) SELECT query,
 as shown in [](#approach-shacl).
@@ -89,14 +87,8 @@ and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
 
 ### SPIN SPARQL Queries
 
-The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
-to SHACL for specifying rules and constraints.
-It is more lightweight than SHACL, but thereby also less expressive.
-The SPIN vocabulary is based on the SPARQL query language for defining these constraints,
-where triple patterns can be composed as graph patterns, which in turn can be composed as more complex graph patterns.
-
-SPIN allows SPARQL queries to be defined in a triple representation,
-something which SHACL does not support.
+The [SPIN vocabulary](cite:citesAsAuthority spec:spin) allows SPARQL queries to be defined in a triple representation,
+something that SHACL does not support.
 The advantage of triple-based representations over text-based is that RDF-based tools
 can directly use and work with these structures, such as reasoners and query engines.
 The disadvantage of triple-based representations is that they are typically
@@ -120,3 +112,13 @@ which leads to a large amount of triples, even for simple queries.
 
 As our subject, predicate and object variables are now represented as actual resources,
 they are explicitly linked with the Hydra variables, which is a semantic advantage.
+
+### OWL Restrictions
+
+While [OWL](cite:citesAsAuthority spec:owl) allows restrictions to be placed on RDF graphs,
+it can not do this at the same level of expressivity as SHACL.
+Furthermore, the open world assumption on which OWL is based makes it more difficult to describe the closed world of Web API responses.
+
+Our TPF use case can for instance not be represented using OWL restrictions.
+More simple operations such as restricting to all instances of a certain type,
+or defining the cardinality of certain aspects are however still possible.
