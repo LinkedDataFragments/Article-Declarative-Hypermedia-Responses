@@ -20,4 +20,4 @@ Based on this model, we conclude that a SHACL shape-based approach
 is sufficient for declaring such a parameterized response structure.
 <!-- Perspectives -->
 
-<span id="keywords"><span class="title">Keywords:</span> Linked Data, Hypermedia, RDF, SHACL, Hydra</span>
+<span id="keywords"><span class="title">Keywords</span> Linked Data, Hypermedia, RDF, SHACL, Hydra</span>

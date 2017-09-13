@@ -15,6 +15,10 @@ margin:1.9cm 1.9cm 2.54cm 1.9cm;
 /*size:18cm 23.5cm;*/
 }
 
+#repeating-title {
+  display: none;
+}
+
 body {
 font-size:9pt !important;
 padding:0 !important;
@@ -55,7 +59,7 @@ font-size:12pt;
 font-size:10pt;
 }
 
-main {
+#content {
 -webkit-columns:8.45cm 2;
 -webkit-column-count:2;
 -webkit-column-width:8.45cm;
@@ -117,6 +121,17 @@ h1, #authors, #keywords, #categories-and-subject-descriptors, #general-terms, #r
 hyphens:none;
 }
 
+#keywords {
+  display: block;
+  margin-bottom: 1em;
+  .title {
+    display: block;
+    font-weight: bold;
+    font-size:1.333em;
+    margin: 0.5em 0 0.5em;
+  }
+}
+
 table, img, object, iframe, figure, audio, video, canvas { page-break-inside:avoid; }
 object, iframe {
 width:100% !important;
@@ -145,7 +160,7 @@ column-count:2;
 column-gap:1.9em;
 }
 
-p, ol, ul, table, figure {
+ol, ul, table, figure {
 margin-bottom:1em;
 }
 ul, ol {
@@ -217,19 +232,19 @@ h3, h4, h5, h6 {
 margin-top:1em;
 }
 
-article section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) {
+main section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) {
 counter-increment:section;
 counter-reset:sub-section;
 }
-article section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) section {
+main section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) h3 {
 counter-increment:sub-section;
 counter-reset:sub-sub-section;
 }
-article section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) section section {
+main section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]) h4 {
 counter-increment:sub-sub-section;
 counter-reset:sub-sub-sub-section;
 }
-article section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]):not([id^=table-of-]) > h2:before {
+main section:not([id=abstract]):not([id=document-status]):not([id=keywords]):not([id=references]):not([id=categories-and-subject-descriptors]):not([id=general-terms]):not([id=appendix]):not([id=contact-us]):not([id^=table-of-]) > h2:before {
 content:counter(section) ".\00a0\00a0\00a0\00a0";
 }
 section > h3:before {
@@ -264,22 +279,6 @@ figure math {
 display:block;
 font-size:0.95em;
 }
-figure {
-counter-increment:figure;
-}
-figure.listing {
-counter-increment:listing;
-}
-figure.equation {
-counter-increment:equation;
-}
-figure.equation:after {
-content:"(" counter(equation) ")";
-line-height:0;
-position:absolute;
-top:45%;
-right:0;
-}
 figure object,
 figure img,
 figure pre {
@@ -289,18 +288,6 @@ figcaption,
 caption {
 font-weight:bold;
 text-align:center;
-}
-figcaption:before {
-content:"Figure " counter(figure) ": ";
-}
-figure.listing figcaption:before {
-content:"Listing " counter(listing) ": ";
-}
-table {
-counter-increment:table;
-}
-caption:before {
-content:"Table " counter(table) ": ";
 }
 
 .toc, .toc ol {
@@ -478,7 +465,7 @@ list-style-type:none;
 }
 
 
-#authors {
+#authors, #affiliations {
 font-family:Arial, sans-serif;
 text-align:center;
 margin:0 0 1em 0;
@@ -490,6 +477,7 @@ line-height:1;
 margin-left:0;
 }
 #authors li,
+#affiliations li,
 #categories-and-subject-descriptors li,
 #keywords li {
 list-style-type:none;
@@ -518,9 +506,7 @@ font-family:Helvetica, Arial, sans-serif;
 
 
 #authors {
-text-align:left;
 position:relative;
-height:16em;
 }
 
 #author-name,
@@ -712,6 +698,16 @@ counter-reset:listing 0;
 article {
 counter-reset:table 0;
 }
+// Links
+a {
+  // Display URL of mandatory links
+  &.mandatory {
+    &:after {
+      content: ' (' attr(href) ')';
+      font-style: italic;
+    }
+  }
+}
 figure,
 audio,
 video {
@@ -738,7 +734,7 @@ figure.listing pre samp:before {
 position:absolute;
 left:-1.75em;
 text-align:right;
-content:counter(precode);
+#content:counter(precode);
 counter-increment:precode;
 }
 
@@ -795,10 +791,8 @@ border-collapse:collapse;
 /*display:inline-block;*/
 width:calc(100% - 2px);
 }
-table,
-th,
-td {
-border:1px solid;
+th {
+border-bottom:1px solid;
 }
 table thead td:first-child,
 table tfoot td:first-child {
@@ -813,11 +807,37 @@ text-align:left;
 text-align:center;
 }
 
+table {
+  width: 100%;
+}
+th {
+  font-weight: bold;
+  border-bottom:1px solid;
+}
+table thead td:first-child, table tfoot td:first-child {
+  border:0;
+}
+th, td {
+  padding:0.25em;
+  text-align:left;
+}
+
+caption {
+  padding:0.25em 0;
+}
+tbody th {
+  text-align:left;
+}
+
 caption {
 padding:0.25em 0;
 }
 tbody th {
 text-align:left;
+}
+thead {
+  /* Chrome shows duplicate thead rows on the same page: https://bugs.chromium.org/p/chromium/issues/detail?id=24826 */
+  display: table-row-group;
 }
 
 form {
