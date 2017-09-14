@@ -1,31 +1,29 @@
 ## Conclusions
 {:#conclusions}
-<span class="comment" data-author="RV">I'm not a major fan yet of the conclusions. There are come good points in there, but most of them were already made in some way. We need to take a step back and zoom out more. Also interesting is the work happening in the W3C DXWG group regarding profiles, I think there is an interesting connection to be made in the conclusions. I.e., hypermedia controls are self-describing, clients can recognize them, but thanks to profiles, they could also explicitly request them, or servers can indicate support. Then we'd essentially have a multi-dimensional version of the Custom Types approach on top of the other approaches. For instance, a client receives a response with a TPF hypermedia control. If the client recognizes the control itself, that's great; but if additionally the TPF profile is indicated (on top of the content type), and the client doesn't understand TPF, at least it has an identifier to find another client who maybe does.</span>
 
-<span class="comment" data-author="RV">A lot of the Web works like custom types. It is just not sustainable at the moment.</span>
+Much of the Web's current hypermedia control response types are left to the client's interpretation,
+which could be done using custom types.
+This approach is however hard to sustain, as it leads requires new types for each new response type,
+and leads to tight client-server coupling.
+If we want to have sustainable and declarative hypermedia response definitions on the Web,
+a technique is required that revolves around standards with an adequate level of expressivity and composability,
+but is not too difficult for clients to work with.
 
-In this work, we discuss and compare different approaches
-for declaratively describing the responses of hypermedia-driven Web APIs.
+The SHACL-based approach that we introduce in this work adheres to these requirements.
+It is in line with the REST architectural style,
+as at its core, it is based on simple building blocks that make it easy for clients to discover and interpret them,
+and these building blocks can be combined for reaching a higher level of expressivity.
+Furthermore, as SHACL is a W3C recommendation, it can lead to a higher adoption rate.
+Practical usage of this approach is already possible without any new vocabularies or extensions.
+If servers expose the _shape_ of their control responses,
+clients that _understand_ SHACL and Hydra can interpret this to determine if this control is useful for them.
 
-As discussed in [](#model-application), we propose the SHACL-based approach as a general solution.
-In certain specific use cases, other criteria importance orders may be in place,
-which could lead to different answers.
+A response declaration can be seen as the server's _suggested_ way
+of consuming the data behind a control, but not necessarily the only way.
+Profile-based negatiation on controls can provide _multiple dimensions_ on how this data can be consumed,
+by allowing clients to ask the server for returning the data in a different _application profile_,
+which may be more convenient for the client to work with.
 
-As mentioned in [](##approach-shacl), there is however some overlap between the Hydra variables and SHACL parameters.
-As the latter is more expressive, Hydra variables could be deprecated in favor of SHACL parameters.
-For ensuring backwards compatibility with clients that only support regular Hydra controls,
-these Hydra variables should still be kept in place.
-
-The SHACL-based approach that we propose requires no changes to the existing Hydra controls,
-it only requires additional metadata.
-This allows clients to make use of this additional metadata if they require knowledge of the response structure of Web APIs.
-Clients that _are not_ able to interpret this information will still be able to use the regular Hydra controls.
-Furthermore, even if clients _are_ able to interpret this information,
-but the server does not declare the response structure,
-the client could still use the regular Hydra controls,
-by falling back to the assumption-based response structure,
-as it is currently being done.
-
-With this hypermedia control extension, clients are able to known what kind of data is returned based on certain input.
+With such a hypermedia control extension, clients are able to known what kind of data is returned based on certain input.
 This will enable autonomous clients to become smarter,
 by making better choices when consuming data from interfaces.
