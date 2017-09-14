@@ -20,7 +20,7 @@ clients that _understand_ SHACL and Hydra can interpret this to determine if thi
 
 A response declaration can be seen as the server's _suggested_ way
 of consuming the data behind a control, but not necessarily the only way.
-Profile-based negatiation on controls can provide _multiple dimensions_ on how this data can be consumed,
+[Profile-based negatiation](cite:cites dxwg) on controls can provide _multiple dimensions_ on how this data can be consumed,
 by allowing clients to ask the server for returning the data in a different _application profile_,
 which may be more convenient for the client to work with.
 
