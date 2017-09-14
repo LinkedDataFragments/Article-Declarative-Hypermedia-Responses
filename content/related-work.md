@@ -1,11 +1,12 @@
 ## Related Work
 {:#related-work}
 
-{:.todo}
-Hydra, SHACL and SPIN (or put in introduction?)
-
-{:.todo}
-Probably also OWL-S and stuff (unfortunately)
+Next to the REST architectural style, the SOAP protocol is often used for letting _Web Services_ interoperate.
+Just, like RPC, SOAP requires custom client-side implementation for each Web Service,
+as opposed to the more generic REST APIs.
+[OWL-S](cite:citesAsAuthority owls) is a vocabulary for describing such Web Services.
+It allows services to declare their actions, how they can be used, and how they work.
+As opposed to the Hydra Core vocabulary, this leads to tight coupling between servers and clients.
 
 [Verborgh et al. distinguish two types of Web APIs](cite:citesAsAuthority webapifeatures)
 in terms of how they expose their functionality.
