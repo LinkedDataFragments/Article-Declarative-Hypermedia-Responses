@@ -1,17 +1,8 @@
 <http://fragments.dbpedia.org/2014/en#dataset> hydra:search [
-    ....
-    sh:parameter [
-        sh:path ex:subject;
-        sh:order 0;
-        sh:nodeKind sh:BlankNodeOrIRI;
-    ], [
-        sh:path ex:predicate;
-        sh:order 1;
-        sh:nodeKind sh:IRI;
-    ], [
-        sh:path ex:object;
-        sh:order 2;
-    ];
+    ...
+    sh:parameter [ sh:path ex:subject;   sh:order 0; sh:nodeKind sh:BlankNodeOrIRI ],
+                 [ sh:path ex:predicate; sh:order 1; sh:nodeKind sh:IRI ],
+                 [ sh:path ex:object;    sh:order 2 ];
     sh:select """
         SELECT ?subject ?predicate ?object
         WHERE {
