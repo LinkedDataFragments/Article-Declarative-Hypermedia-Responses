@@ -75,15 +75,3 @@ We discuss approaches based on custom vocabularies,
 the recent W3C recommendation [SHACL](cite:citesAsAuthority spec:shacl),
 the [SPIN modeling vocabulary](cite:citesAsAuthority spec:spin)
 and the [Web Ontology Language (OWL)](cite:citesAsAuthority spec:owl).
-SHACL is a recent W3C recommended vocabulary that allows
-RDF shapes to be defined and composed for constraint checking and validation.
-The [SPIN vocabulary](cite:citesAsAuthority spec:spin) can be seen as the predecessor
-to SHACL for specifying rules and constraints.
-It is more lightweight than SHACL, but thereby also less expressive.
-The SPIN vocabulary is based on the SPARQL query language for defining these constraints,
-where triple patterns can be composed as graph patterns, which in turn can be composed as more complex graph patterns.
-Alternatively, the [OWL](cite:citesAsAuthority spec:owl) and [RDF Schema (RDFS)](cite:citesAsAuthority spec:rdfs)
-could be used to define constraints on certain targets.
-The main difference between SHACL and OWL is that SHACL works under the _closed world assumption_,
-while OWL works under the _open world assumption_.
-In practise, the latter makes data validation more complex, which is part of the motivation for SHACL's creation.
