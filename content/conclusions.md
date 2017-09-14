@@ -2,6 +2,8 @@
 {:#conclusions}
 <span class="comment" data-author="RV">I'm not a major fan yet of the conclusions. There are come good points in there, but most of them were already made in some way. We need to take a step back and zoom out more. Also interesting is the work happening in the W3C DXWG group regarding profiles, I think there is an interesting connection to be made in the conclusions. I.e., hypermedia controls are self-describing, clients can recognize them, but thanks to profiles, they could also explicitly request them, or servers can indicate support. Then we'd essentially have a multi-dimensional version of the Custom Types approach on top of the other approaches. For instance, a client receives a response with a TPF hypermedia control. If the client recognizes the control itself, that's great; but if additionally the TPF profile is indicated (on top of the content type), and the client doesn't understand TPF, at least it has an identifier to find another client who maybe does.</span>
 
+<span class="comment" data-author="RV">A lot of the Web works like custom types. It is just not sustainable at the moment.</span>
+
 In this work, we discuss and compare different approaches
 for declaratively describing the responses of hypermedia-driven Web APIs.
 
