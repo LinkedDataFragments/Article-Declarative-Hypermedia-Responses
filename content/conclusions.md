@@ -24,6 +24,18 @@ Profile-based negatiation on controls can provide _multiple dimensions_ on how t
 by allowing clients to ask the server for returning the data in a different _application profile_,
 which may be more convenient for the client to work with.
 
-With such a hypermedia control extension, clients are able to known what kind of data is returned based on certain input.
-This will enable autonomous clients to become smarter,
-by making better choices when consuming data from interfaces.
+With such a hypermedia control extension, clients are able
+to known not only what the _input_ of a control is,
+but also what kind of data is returned as _output_ based on certain input.
+This information is vital for any kind of operation,
+just like typed programming languages require declaration
+of both the input and output types of operations.
+This extension will enable autonomous clients to work with such controls in a better way,
+as they will be able to know what output to expect from a certain control.
+This will for instance allow clients to select only the controls that will
+produce the response structure that the client can work with,
+or start preparing a response data structure _before_ the actual control response is even received.
+Nevertheless, future work is still required in this direction,
+to empirically validate the practisal feasibility of this approach.
+Furthermore, algorithms will need to be developed to efficiently generate such declarations server-side,
+and to work with them client-side.
