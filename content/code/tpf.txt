@@ -1,6 +1,5 @@
 <http://fragments.dbpedia.org/2014/en#dataset> hydra:search [
     hydra:template "http://fragments.dbpedia.org/2014/en{?s,p,o}";
-    hydra:variableRepresentation hydra:ExplicitRepresentation;
     hydra:mapping [ hydra:variable "s"; hydra:property rdf:subject ],
                   [ hydra:variable "p"; hydra:property rdf:predicate ],
                   [ hydra:variable "o"; hydra:property rdf:object ]

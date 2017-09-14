@@ -30,21 +30,19 @@ that can be used to describe hypermedia behaviors.
 While RDF natively supports the first hypermedia factor, i.e., _outbound links_,
 it provides no support for more advanced _templated links_.
 The latter corresponds to HTML forms on Web pages, such as a form for searching books through a library's website.
-One part of the [Hydra Core Vocabulary](cite:citesAsAuthority hydra) attempts to fill this gap
+One part of the [Hydra Core vocabulary](cite:citesAsAuthority hydra) attempts to fill this gap
 by representing HTML controls as Linked Data for machines.
 
-This vocabulary is for example used in the [Triple Pattern Fragments (TPF)](cite:citesAsAuthority ldf) framework
+The Hydra Core vocabulary is for example used in the [Triple Pattern Fragments (TPF)](cite:citesAsAuthority ldf) framework
 for describing triple pattern query interfaces.
 TPF interfaces expose hypermedia controls that enable triple pattern queries on top of certain datasets.
 This allows clients to consume data from datasets that are exposed behind TPF interfaces using these self-descriptive controls,
 as shown in [](#tpf-controls).
 In this example, the `hydra:search` predicate is used to link a search form to a dataset.
-This search form has a IRI template string which allows certain variables to be filled in.
+This search form has an IRI template string which allows certain variables to be filled in.
 These variables are declared in the range of `hydra:mapping`,
 which are in this case `'s'`, `'p'` and `'o'`, which respectively are an
 [RDF](cite:citesAsAuthority spec:rdf) subject, predicate and object.
-The `hydra:ExplicitRepresentation` variable representation indicates that the variable values
-can include type and language information when filled in.
 
 <figure id="tpf-controls" class="listing">
 ````/code/tpf.txt````

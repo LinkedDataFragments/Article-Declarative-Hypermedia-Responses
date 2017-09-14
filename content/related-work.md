@@ -42,7 +42,7 @@ to SHACL for specifying rules and constraints.
 It is more lightweight than SHACL, but thereby also less expressive.
 The SPIN vocabulary is based on the SPARQL query language for defining these constraints,
 where triple patterns can be composed as graph patterns, which in turn can be composed as more complex graph patterns.
-Alternatively, the [OWL](cite:citesAsAuthority spec:owl) and [RDF Schema (RDFS)](cite:citesAsAuthority spec:rdfs)
+Alternatively, [OWL](cite:citesAsAuthority spec:owl) and [RDF Schema (RDFS)](cite:citesAsAuthority spec:rdfs)
 could be used to define constraints on certain targets.
 The main difference between SHACL and OWL is that SHACL works under the _closed world assumption_,
 while OWL works under the _open world assumption_.
