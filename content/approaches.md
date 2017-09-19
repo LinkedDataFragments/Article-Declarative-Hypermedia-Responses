@@ -39,7 +39,8 @@ which refers to a triple pattern query, as shown in [](#approach-customtypes).
 <figure id="approach-customtypes" class="listing">
 ````/code/approach-customtypes.txt````
 <figcaption markdown="block">
-Triple pattern query response declaration using a custom `tpf:TriplePatternQueryResponse` type.
+Triple pattern query response declaration using a custom `tpf:TriplePatternQueryResponse` type,
+with `ex:responseType` referring to this type.
 </figcaption>
 </figure>
 
