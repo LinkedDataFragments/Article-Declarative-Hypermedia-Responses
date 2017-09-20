@@ -11,6 +11,7 @@ but is not too difficult for clients to work with.
 
 The SHACL-based approach that we introduce in this work adheres to these requirements.
 It is in line with the REST architectural style,
+<span class="comment" data-author="RV">I find this very generic. Which part of the REST architectural style specifically, and why? I'd rather say that it allows implementing the self-descriptive message constraint of the REST style in a sustainable way across APIs.</span>
 as at its core, it is based on simple building blocks that make it easy for clients to discover and interpret them,
 and these building blocks can be combined for reaching a higher level of expressivity.
 Furthermore, as SHACL is a W3C recommendation, it can lead to a higher adoption rate.
@@ -20,7 +21,7 @@ clients that _understand_ SHACL and Hydra can interpret this to determine if thi
 
 A response declaration can be seen as the server's _suggested_ way
 of consuming the data behind a control, but not necessarily the only way.
-[Profile-based negatiation](cite:cites dxwg) on controls can provide _multiple dimensions_ on how this data can be consumed,
+[Profile-based negotiation](cite:cites dxwg) on controls can provide _multiple dimensions_ on how this data can be consumed,
 by allowing clients to ask the server for returning the data in a different _application profile_,
 which may be more convenient for the client to work with.
 
