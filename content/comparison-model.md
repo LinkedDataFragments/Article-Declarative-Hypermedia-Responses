@@ -2,10 +2,11 @@
 {:#comparison-model}
 
 In this section, we introduce a simple model for comparing approaches for declaratively representing Web API responses.
+<span class="comment" data-author="RV">Why do you say <q>simple</q>? What are the good and bad qualities of being simple? Is it trivial? I guess a model shouldn't be more difficult than it needs to be, but also not less. I'd be careful expressing this.</span>
 Our model consists of different criteria that can influence the choice of a certain approach:
 _RDF complexity_, _expressivity_, _composability_, _discoverability_ and _adoptability_.
 These will be explained hereafter.
-Each response representation approach can receive a qualitative score for each of these criteria.
+Each representation approach can receive a qualitative score for each of these criteria.
 A suitable approach can then be chosen based on the composite score across these criteria,
 which can possibly be weighted depending on the relative importance of these criteria in the use case.
 
@@ -31,6 +32,7 @@ clients should require no prior knowledge
 about interface functionality except for the agreed-upon primitives.
 Simple and few primitives on the one hand lower the barrier for client support,
 such as the eight well known [HTTP](cite:citesAsAuthority http) methods.
+<span class="comment" data-author="RV">Arguing at the wrong level here, I think (and I've edited it in the introduction). We're talking about primitives to express things inside of response bodies, i.e., primitives for usage inside of RDF. HTTP is at the protocol level; we're talking about the application level.</span>
 These primitives should however be sufficiently expressive,
 as to allow more advanced operations to be defined on top of them.
 Many complex and expressive primitives on the other hand
@@ -43,13 +45,13 @@ One vocabulary may for example only enable simple triple pattern queries to be r
 which may be simple for a client to parse and handle, but is not very expressive.
 Another vocabulary may enable full SPARQL queries to be represented,
 which may be more complex for a client to use, but is much more expressive.
-By following the REST principles, a well defined restricted vocabulary should be agreed upon
+By following the REST principles, a well-defined restricted vocabulary should be agreed upon
 using which, potentially complex, response types can be declared.
 
 ### Composability
 
-Just like a [feature-based interface](cite:citesAsAuthority webapifeatures),
-response structures could be made up of multiple smaller reusable components that can be _composed_ and _extended_.
+As in a [feature-based interface](cite:citesAsAuthority webapifeatures),
+response structures can be made up of multiple smaller reusable components that can be _composed_ and _extended_.
 This allows clients to only be required to understand these smaller components,
 and this could allow more complex composed response types to be interpreted automatically.
 Different techniques can lead to different levels of composability.
@@ -73,5 +75,5 @@ while a reference to the source code that is used to control the Web API require
 
 While different approaches for Web API response types exist,
 the used technologies behind these approaches will have an impact on the adoption rate.
-The usage of a new, unknown and non-standard vocabulary will most likely lead to a lower adoption rate
+The usage of a new, non-standard vocabulary will most likely lead to a lower adoption rate
 than the usage of vocabulary that is recommended by W3C.
