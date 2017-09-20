@@ -1,8 +1,8 @@
 ---
-title: Declaratively Describing Hypermedia-driven Web API Responses
+title: "Declaratively Describing Responses\n of Hypermedia-Driven Web APIs"
 ---
 <header markdown="1">
-# <%= @item[:title] %>
+<h1><%= h(@item[:title]).gsub(/\n/, '<br>') %></h1>
 <div id="repeating-title"><%= @item[:title] %></div>
 
 {:#authors}
