@@ -1,14 +1,16 @@
 ## Discussion
 {:#discussion}
 
+<span class="comment" data-author="RV">Is there a possibility to interweave the discussed approaches more with the individual paragraphs? I have trouble connecting the criteria to the approaches, the discussion seems to discuss the model but not the approaches.</span>
+
 Based on our model from [](#comparison-model), there are different ways for choosing between the discussed approaches from [](#approaches).
-There is no one approach that is the _winner_ across all criteria,
+There is no one approach that is the _winner_ across all criteria:
 an appropriate approach depends on the situation.
 In this section, we discuss the arguments for preferring certain criteria over others,
 and which approaches may be best suited in certain situations.
 
 In many cases, the _adoption_ rate would be of great importance,
-unless the approach would be used in a closed-off environment,
+unless the approach would be used in a closed environment,
 which makes declarative response types less useful in the first place.
 According to the [best practises for publishing Linked Data](cite:cites ldbestpractises),
 standard vocabularies should be reused as much as possible,
