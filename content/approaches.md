@@ -1,4 +1,4 @@
-## Response Declaration Approaches
+## Approaches for Declarative Response Description
 {:#approaches}
 
 In this section, we discuss and compare different approaches
@@ -33,7 +33,7 @@ declaring interface responses based on the model from [](#comparison-model).
 
 A simple solution would be to define a new response type at vocabulary-level
 for each hypermedia control type that exists.
-For our use case, we could introduce a `tpf:TriplePatternQueryResponse` type in a new `tpf` vocabulary,
+For our use case, we could introduce a (hypothetical) `tpf:TriplePatternQueryResponse` type in a new `tpf` vocabulary,
 which refers to a triple pattern query, as shown in [](#approach-customtypes).
 
 <figure id="approach-customtypes" class="listing">
@@ -44,21 +44,26 @@ with `ex:responseType` referring to this type.
 </figcaption>
 </figure>
 
-While this approach may seem very simple to setup at first sight,
+While this approach may seem very simple to set up at first sight,
 which also makes it easily _discoverable_,
+<span class="comment" data-author="RV">Not really a consequence: simple setup doesn't mean simple consumption/discovery.</span>
 it has some significant disadvantages.
 For one, as each response type requires a separate RDF type,
-clients implement have explicit support for each of these potentially huge number of types.
+and clients need explicit support for a potentially huge number of types.
+<span class="comment" data-author="RV">Something about subtypes here too.</span>
+it has some significant disadvantages.
 Instead of small functional building blocks that can be reused,
 service providers would have to define new types for each interface that offers different functionality.
+<span class="comment" data-author="RV">I'd make the comparison to MIME types here, with the difference that RDF types can have explicit subclasses (which are just a convention with MIME types), and potentially combinations.</span>
 
 ### SHACL Shapes
 {:#approach-shacl}
 
 While the SHACL vocabulary is primarily used for defining shape constraints,
 we can also use SHACL to describe the shape of our responses.
+<span class="comment" data-author="RV">Isn't that the same? I.e., a constraint on a response?</span>
 In our TPF use case, we could make our search form a parameterizable shape,
-and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) SELECT query,
+and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) `SELECT` query,
 as shown in [](#approach-shacl).
 
 <figure id="approach-shacl" class="listing">
@@ -71,13 +76,12 @@ that is a subclass of `sh:Parameterizable` and `sh:SPARQLSelectExecutable`.
 
 The interface input parameters and the response shape parameters are declared separately.
 The former is defined using Hydra, while the latter is defined using SHACL.
-As these parameters are — and should always be — equal for allowing output to be fully defined using input,
+As these parameters are—and should always be—equal for allowing output to be fully defined using input,
 one of the two methods could be deprecated in favor of the other.
 The Hydra variables are simpler, but also less expressive.
 SHACL parameters are much more expressive because they are also SHACL property shapes,
 which means that the full expressivity of SHACL constraints can be used on these parameter values.
-
-SHACL parameter names are however not defined in the same way as Hydra variable names.
+SHACL parameter names are, however, not defined in the same way as Hydra variable names.
 Hydra allows variable names to be set using the `hydra:variable` predicate.
 Instead, SHACL parameter names are derived from the IRI in `sh:path`.
 
@@ -121,5 +125,6 @@ it can not do this at the same level of expressivity as SHACL.
 Furthermore, the open world assumption on which OWL is based makes it more difficult to describe the closed world of Web API responses.
 
 Our TPF use case can for instance not be represented using OWL restrictions.
+<span class="comment" data-author="RV">You'll need to argue this in detail for the OWL experts reading this.</span>
 More simple operations such as restricting to all instances of a certain type,
 or defining the cardinality of certain aspects are however still possible.
