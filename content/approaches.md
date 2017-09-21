@@ -31,7 +31,7 @@ declaring interface responses based on the model from [](#comparison-model).
 
 ### Custom Types
 
-A simple solution would be to define a new response type at vocabulary-level
+A simple solution is to define a new response type at vocabulary-level
 for each hypermedia control type that exists.
 For our use case, we could introduce a (hypothetical) `tpf:TriplePatternQueryResponse` type in a new `tpf` vocabulary,
 which refers to a triple pattern query, as shown in [](#approach-customtypes).
@@ -44,21 +44,21 @@ with `ex:responseType` referring to this type.
 </figcaption>
 </figure>
 
-The advantages of this approach is that it is very simple to set up,
-and it is easily _discoverable_.
+The advantages of this approach are that it is very simple to set up,
+and is easily _discoverable_.
 However, it has some significant disadvantages.
 For one, as each response type requires a separate RDF type,
 and clients need explicit support for a potentially huge number of types.
-Instead of small functional building blocks that can be reused,
-service providers would have to define new types for each interface that offers different functionality.
+Instead of having small reusable functional building blocks,
+new types have to be defined for each interface that offers different functionality.
 As opposed to indirect hierarchical types as is the case with [MIME types](cite:citesAsAuthority mimetypes),
-RDF enables more explicit basic composition of types by attaching multiple RDF types and RDF subclassing.
+RDF enables more explicit basic composition of types by attaching multiple types and subclassing.
 
 ### SHACL Shapes
 {:#approach-shacl}
 
-The SHACL vocabulary is primarily used for defining shape constraints to validate RDF graphs against.
-Instead of using it for validation, we can use SHACL to just describe the shape of our responses.
+The SHACL vocabulary is designed for defining shape constraints to validate RDF graphs against,
+which allows us to describe the shape of our responses.
 In our TPF use case, we could make our search form a parameterizable shape,
 and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) `SELECT` query,
 as shown in [](#approach-shacl).

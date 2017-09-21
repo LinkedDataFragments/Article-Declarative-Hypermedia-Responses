@@ -800,7 +800,6 @@ border:0;
 }
 th,
 td {
-padding:0.25em;
 text-align:left;
 }
 .comparison-columns tbody td {
@@ -817,24 +816,14 @@ th {
 table thead td:first-child, table tfoot td:first-child {
   border:0;
 }
-th, td {
-  padding:0.25em;
-  text-align:left;
-}
 
 caption {
-  padding:0.25em 0;
+  padding:0.1em 0;
 }
 tbody th {
   text-align:left;
 }
 
-caption {
-padding:0.25em 0;
-}
-tbody th {
-text-align:left;
-}
 thead {
   /* Chrome shows duplicate thead rows on the same page: https://bugs.chromium.org/p/chromium/issues/detail?id=24826 */
   display: table-row-group;
@@ -920,6 +909,10 @@ section article p:last-child {
 margin-bottom:0;
 }
 
+.references {
+  font-size:1em;
+  line-height:1em;
+}
 
 #references ol {
 counter-reset:list-order;

@@ -12,14 +12,13 @@ unless the approach would be used in a closed environment,
 which makes declarative response types less useful in the first place.
 According to the [best practises for publishing Linked Data](cite:cites ldbestpractises),
 standard vocabularies --such as SHACL-- should be reused as much as possible,
-because this helps with the inclusion in the Web of data.
-Furthermore, multiple tools typically exist to work with these standard vocabularies.
+because this helps with the inclusion in the Web of data and these typically have better tool support.
 
-Responses should be declaratively definable at a sufficient level of _expressivity_,
+Responses should be declared at a sufficient level of _expressivity_,
 as long as clients are able to interpret them.
 Chances of this are higher when standard vocabularies are used,
-because these tend to have support in multiple tools.
-That is why the adoption criterion will typically have a higher preference over the level of expressivity.
+because of the better tool support.
+Therefore, adoption rate is typically prioritized over expressivity.
 SHACL for instance provides a higher level of expressivity than OWL,
 while they are both standard vocabularies.
 
@@ -36,19 +35,19 @@ clients require less hard-coded support for these building blocks, which benefit
 Approaches that do not allow composability will require more of these building blocks to
 achieve a high level of expressivity, which can negatively impact discoverability.
 The composability of the approaches based on SHACL, SPIN and OWL
-is for instance much higher than the composability of custom types,
-because custom types have no standard building blocks to express responses.
+is for instance much higher than that of custom types,
+because the latter have no standard building blocks.
 
-In situations where RDF-based tools are required for
-handling the response declarations, then the _RDF complexity_ criterion is of importance.
-Nevertheless, even in cases where non-RDF representations are used,
-RDF-based tool processing could still be done by reifying to RDF in a client-side postprocessing step.
+When RDF-based tools are required for
+handling the response declarations, _RDF complexity_ is important.
+Nevertheless, even where non-RDF representations are used,
+RDF-based tool processing could still be done by reifying to RDF in a postprocessing step.
 SPIN and OWL are examples where responses can be expressed purely in RDF,
 while SHACL-SPARQL encodes SPARQL queries as RDF literals.
 The RDF complexity is related to the composability of an approach,
 as small building blocks that are defined in granular RDF statements,
-can potentially be reused as part of other more complex and therefore expressive declarations.
-A high level of RDF complexity can however again negatively impact discoverability due to the higher required client effort.
+can potentially be reused as part of other more complex and possibly more expressive declarations.
+A high level of RDF complexity can however negatively impact discoverability due to the higher required interpretation effort.
 
 As mentioned before, choosing an appropriate approach depends on the situation.
 For instance, if we require an approach that is based on standards,
