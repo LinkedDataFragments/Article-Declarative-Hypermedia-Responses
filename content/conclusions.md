@@ -10,9 +10,8 @@ a technique is required that revolves around standards with an adequate level of
 but is not too difficult for clients to work with.
 
 The SHACL-based approach that we introduce in this work adheres to these requirements.
-It is in line with the REST architectural style,
-<span class="comment" data-author="RV">I find this very generic. Which part of the REST architectural style specifically, and why? I'd rather say that it allows implementing the self-descriptive message constraint of the REST style in a sustainable way across APIs.</span>
-as at its core, it is based on simple building blocks that make it easy for clients to discover and interpret them,
+It allows implementing the self-descriptive message constraint of the REST style in a sustainable way across APIs.
+It is based on simple building blocks that make it easy for clients to discover and interpret them,
 and these building blocks can be combined for reaching a higher level of expressivity.
 Furthermore, as SHACL is a W3C recommendation, it can lead to a higher adoption rate.
 Practical usage of this approach is already possible without any new vocabularies or extensions.
