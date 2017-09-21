@@ -1,12 +1,7 @@
 ## Abstract
 <!-- Context      -->
 While humans browse the Web by following links,
-<span class="rephrase">
-hypermedia is the equivalent that machines use for browsing.
-</span>
-<span class="comment" data-author="RV">
-Not entirely correct: the links on the human Web are also hypermedia.
-</span>
+these _hypermedia_ links can also be used by machines for browsing.
 While efforts such as Hydra semantically describe
 the hypermedia controls on Web interfaces
 to enable smarter interface-agnostic clients,
@@ -25,8 +20,7 @@ and we compare them based on a simple model that we introduce.
 <!-- Findings     -->
 <!-- Conclusion   -->
 Based on this model, we conclude that a SHACL shape-based approach
-is the most <span class="comment" data-author="RV">word missing</span>
-for declaring such a parameterized response structure,
+can be used for declaring such a parameterized response structure,
 as it conforms to the REST architectural style that has helped shape the Web into its current form.
 <!-- Perspectives -->
 
