@@ -1,8 +1,7 @@
 ## Model for Comparison
 {:#comparison-model}
 
-In this section, we introduce a simple model for comparing approaches for declaratively representing Web API responses.
-<span class="comment" data-author="RV">Why do you say <q>simple</q>? What are the good and bad qualities of being simple? Is it trivial? I guess a model shouldn't be more difficult than it needs to be, but also not less. I'd be careful expressing this.</span>
+In this section, we introduce a model for comparing approaches for declaratively representing Web API responses.
 Our model consists of different criteria that can influence the choice of a certain approach:
 _RDF complexity_, _expressivity_, _composability_, _discoverability_ and _adoptability_.
 These will be explained hereafter.
@@ -31,8 +30,7 @@ According to the REST principles and the layered architectural style,
 clients should require no prior knowledge
 about interface functionality except for the agreed-upon primitives.
 Simple and few primitives on the one hand lower the barrier for client support,
-such as the eight well known [HTTP](cite:citesAsAuthority http) methods.
-<span class="comment" data-author="RV">Arguing at the wrong level here, I think (and I've edited it in the introduction). We're talking about primitives to express things inside of response bodies, i.e., primitives for usage inside of RDF. HTTP is at the protocol level; we're talking about the application level.</span>
+such as the eight well known [HTTP](cite:citesAsAuthority http) methods on the protocol level.
 These primitives should however be sufficiently expressive,
 as to allow more advanced operations to be defined on top of them.
 Many complex and expressive primitives on the other hand

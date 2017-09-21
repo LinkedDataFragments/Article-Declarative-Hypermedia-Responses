@@ -16,7 +16,7 @@ We therefore explored techniques to represent this parameterized response struct
 in a generic but expressive way.
 <!-- Object       -->
 In this work, we discuss four different approaches for declaring a response structure,
-and we compare them based on a simple model that we introduce.
+and we compare them based on a model that we introduce.
 <!-- Findings     -->
 <!-- Conclusion   -->
 Based on this model, we conclude that a SHACL shape-based approach
