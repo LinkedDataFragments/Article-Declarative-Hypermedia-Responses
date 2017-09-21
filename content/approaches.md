@@ -19,7 +19,7 @@ which are summarized in [](#model-scores).
 | --------------- |:------------:|:-----:|:----:|:---:|
 | RDF Complexity  | ◯            | ◑     | ◉    | ◉   |
 | Expressivity    | ◯            | ◉     | ◑    | ☉   |
-| Composability   | ◯            | ◉     | ◉    | ◉   |
+| Composability   | ☉            | ◉     | ◉    | ◉   |
 | Discoverability | ◉            | ◑     | ◑    | ◑   |
 | Adoptability    | ◯            | ◉     | ◑    | ◉   |
 
@@ -44,24 +44,21 @@ with `ex:responseType` referring to this type.
 </figcaption>
 </figure>
 
-While this approach may seem very simple to set up at first sight,
-which also makes it easily _discoverable_,
-<span class="comment" data-author="RV">Not really a consequence: simple setup doesn't mean simple consumption/discovery.</span>
-it has some significant disadvantages.
+The advantages of this approach is that it is very simple to set up,
+and it is easily _discoverable_.
+However, it has some significant disadvantages.
 For one, as each response type requires a separate RDF type,
 and clients need explicit support for a potentially huge number of types.
-<span class="comment" data-author="RV">Something about subtypes here too.</span>
-it has some significant disadvantages.
 Instead of small functional building blocks that can be reused,
 service providers would have to define new types for each interface that offers different functionality.
-<span class="comment" data-author="RV">I'd make the comparison to MIME types here, with the difference that RDF types can have explicit subclasses (which are just a convention with MIME types), and potentially combinations.</span>
+As opposed to indirect hierarchical types as is the case with [MIME types](cite:citesAsAuthority mimetypes),
+RDF enables more explicit basic composition of types by attaching multiple RDF types and RDF subclassing.
 
 ### SHACL Shapes
 {:#approach-shacl}
 
-While the SHACL vocabulary is primarily used for defining shape constraints,
-we can also use SHACL to describe the shape of our responses.
-<span class="comment" data-author="RV">Isn't that the same? I.e., a constraint on a response?</span>
+The SHACL vocabulary is primarily used for defining shape constraints to validate RDF graphs against.
+Instead of using it for validation, we can use SHACL to just describe the shape of our responses.
 In our TPF use case, we could make our search form a parameterizable shape,
 and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) `SELECT` query,
 as shown in [](#approach-shacl).
@@ -124,7 +121,8 @@ While [OWL](cite:citesAsAuthority spec:owl) allows restrictions to be placed on 
 it can not do this at the same level of expressivity as SHACL.
 Furthermore, the open world assumption on which OWL is based makes it more difficult to describe the closed world of Web API responses.
 
-Our TPF use case can for instance not be represented using OWL restrictions.
-<span class="comment" data-author="RV">You'll need to argue this in detail for the OWL experts reading this.</span>
-More simple operations such as restricting to all instances of a certain type,
-or defining the cardinality of certain aspects are however still possible.
+Our TPF use case can for instance not be represented using OWL restrictions,
+because OWL restrictions work on class structures, but not on triple structures.
+That is because OWL has been designed for _inferencing_, and not for defining arbitrary constraints on RDF graphs.
+Other operations such as restricting to all instances of a certain type,
+or defining the cardinality of certain aspects are however possible.
