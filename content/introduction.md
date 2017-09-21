@@ -4,14 +4,14 @@ Humans can browse the Web by following _links_ from one page to another.
 This _human_ interface is only one of the possible Web interfaces that exist.
 Next to humans, machines also heavily make use of the Web
 through Web Application Programming Interfaces (Web APIs).
-Two architectural styles for Web APIs can be distinguished.
+Two architectural styles for Web APIs can be distinguished,
+where elements of them are sometimes combined in practise.
 First, some APIs are based on the concept of Remote Procedure Calling (RPC),
 in which HTTP requests correspond to procedure or method calls of internal programs.
 Second, other APIs are based on [Representational State Transfer (REST)](cite:citesAsAuthority rest),
-<span class="comment" data-author="RV">This gives the feeling that there are only two styles, whereas it is more nuanced in practice.</span>
 in which HTTP resources are linked and described to each other,
 similar to how the human web works.
-In the case of <ins class="comment">pure</ins> REST APIs, _hypermedia controls_ declaratively instruct clients
+In the case of pure REST APIs, _hypermedia controls_ declaratively instruct clients
 on how they can use an interface.
 An advantage of REST over RPC is that these hypermedia controls
 are self-descriptive, and can be reused across different interfaces.
@@ -63,11 +63,10 @@ will contribute to the response.
 This would not only allow clients to derive _what_ parameters are used for a certain request,
 but also _how_ these parameters form the response.
 
-In the case of TPF for example, the subject, predicate and object IRI parameters are described,
-but it is nowhere described that the interface necessarily performs a triple pattern query on the dataset using these parameters.
-The server could for example return the _negation_ of the given triple pattern query on that dataset instead,
-<span class="comment" data-author="RV">Very difficult example (I don't understand it). How about instead you give three possible simple things the server could do with the same data? I also think we should more explicitly say what exactly “performing a triple pattern query” means, i.e., simply returning all triples in the dataset that match a certain pattern.</span>
-<span class="comment" data-author="RV">I also wonder whether TPF is maybe too difficult of an example. The difficulty here is that TPF works on the metalevel, i.e., we use triples to describe hypermedia controls, and TPF then also queries triples. Another example would be, let's say, a firstname/lastname/employee_number interface, where there is a certain expectation of that this interface does, but that is not made explicit and hence could have different effects in practice.</span>
+In the case of TPF for example, the subject, predicate and object IRI parameters are described, which make up a triple pattern.
+It is however nowhere described that the interface necessarily returns all triples in the dataset that _match_ with this pattern.
+The server could for example instead return all triples in the dataset that do _not match_ with this pattern,
+or return the _lexicographical ordering_ of the given parameter values,
 as there is no provided method for distinguishing between these different behaviours with the same input parameters.
 
 In this article, we introduce and compare different approaches
