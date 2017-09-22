@@ -39,7 +39,7 @@ which refers to a triple pattern query, as shown in [](#approach-customtypes).
 <figure id="approach-customtypes" class="listing">
 ````/code/approach-customtypes.txt````
 <figcaption markdown="block">
-Triple pattern query response declaration using a custom `tpf:TriplePatternQueryResponse` type,
+Triple pattern query response declaration using a custom type,
 with `ex:responseType` referring to this type.
 </figcaption>
 </figure>
@@ -84,17 +84,16 @@ Instead, SHACL parameter names are derived from the IRI in `sh:path`.
 
 In summary, SHACL shapes are very expressive for declaring responses of Web APIs.
 Furthermore, the expressivity from the SPARQL query language and JavaScript are inherited thanks to
-the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints){:.mandatory}
-and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/){:.mandatory}.
+the SHACL extensions [SHACL-SPARQL](https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints)
+and [SHACL-JS](https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/).
 
 ### SPIN SPARQL Queries
 
 The [SPIN vocabulary](cite:citesAsAuthority spec:spin) allows SPARQL queries to be defined in a triple representation,
-something that SHACL does not support.
+which SHACL does not support.
 The advantage of triple-based representations over text-based is that RDF-based tools
 can directly use and work with these structures, such as reasoners and query engines.
-The disadvantage of triple-based representations is that they are typically
-more verbose than their text-based variant.
+The disadvantage of triple-based representations is their verbosity compared to a text-based variant.
 
 As our TPF use case requires the representation of a triple pattern query,
 we can again trivially represent this as a SPARQL SELECT query using SPIN,
@@ -109,7 +108,7 @@ Triple pattern query response declaration using a SPARQL SELECT query using the 
 
 As mentioned before, the SPIN-based query in [](#approach-spin) is indeed
 more verbose than the SHACL-SPARQL SELECT query from [](#approach-shacl).
-That is because SPIN requires a reified representation of triple patterns,
+That is because SPIN reifies triple patterns,
 which leads to a large amount of triples, even for simple queries.
 
 As our subject, predicate and object variables are now represented as actual resources,
@@ -124,5 +123,5 @@ Furthermore, the open world assumption on which OWL is based makes it more diffi
 Our TPF use case can for instance not be represented using OWL restrictions,
 because OWL restrictions work on class structures, but not on triple structures.
 That is because OWL has been designed for _inferencing_, and not for defining arbitrary constraints on RDF graphs.
-Other operations such as restricting to all instances of a certain type,
+Other operations such as type restrictions on instances,
 or defining the cardinality of certain aspects are however possible.

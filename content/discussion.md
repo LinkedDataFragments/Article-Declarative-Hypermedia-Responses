@@ -24,10 +24,10 @@ while they are both standard vocabularies.
 
 A response declaration can be defined in an expressive way,
 but as long as clients are not able to _discover_ it,
-the declaration is of not much use.
+it is of not much use.
 Custom types are for example very easily discoverable.
-More expressive response structures may be more complex and difficult for clients to discover,
-which is why a trade-off between those two criteria must be defined.
+More expressive response structures may be more complex and difficult to discover,
+which is why a trade-off between those two criteria exists.
 
 The _composability_ criterion is related to expressivity and discoverability.
 If an approach allows very few and simple building blocks to be combined to reach a high level of expressivity,

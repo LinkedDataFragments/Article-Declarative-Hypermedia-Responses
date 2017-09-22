@@ -14,7 +14,7 @@ It allows implementing the self-descriptive message constraint of the REST style
 It is based on simple building blocks that make it easy for clients to discover and interpret them,
 and these building blocks can be combined for reaching a higher level of expressivity.
 Furthermore, as SHACL is a W3C recommendation, it can lead to a higher adoption rate.
-Practical usage of this approach is already possible without any new vocabularies or extensions.
+Practical usage of this approach is already possible without any new vocabularies.
 If servers expose the _shape_ of their control responses,
 clients that _understand_ SHACL and Hydra can interpret this to determine if this control is useful for them.
 
