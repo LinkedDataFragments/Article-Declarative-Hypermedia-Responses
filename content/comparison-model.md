@@ -14,7 +14,7 @@ which can possibly be weighted depending on the relative importance of these cri
 The level of RDF complexity, i.e., how 'deep' the response structure is represented in RDF,
 has an influence on how easily such a representation can be used by RDF-based tools.
 
-A SPARQL query could for example be represented as an RDF string literal,
+A response that is based on a SPARQL query could for example be represented as an RDF string literal,
 or fully reified using the SPIN vocabulary.
 Both approaches have the same meaning, but the former representation requires less effort to represent in RDF,
 while the latter provides better compatibility with RDF-based tools, such as reasoners and query engines.

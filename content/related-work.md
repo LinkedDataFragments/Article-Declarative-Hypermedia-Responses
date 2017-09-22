@@ -8,10 +8,10 @@ followed by an overview of technologies for defining constraints in RDF.
 
 Next to the REST architectural style, the SOAP protocol is often used for letting _Web Services_ interoperate.
 Just, like RPC, SOAP requires custom client-side implementation for each Web Service,
+which leads to tighter coupling between servers and clients,
 as opposed to the more generic REST APIs.
 [OWL-S](cite:citesAsAuthority owls) is a vocabulary for describing such Web Services.
 It allows services to declare their actions, how they can be used, and how they work.
-As opposed to the Hydra Core vocabulary for Web APIs, this leads to tight coupling between servers and clients.
 
 [Verborgh et al. distinguish two types of Web APIs](cite:citesAsAuthority webapifeatures)
 in terms of how they expose their functionality.

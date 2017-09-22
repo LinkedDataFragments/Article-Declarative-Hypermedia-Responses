@@ -17,14 +17,14 @@ which are summarized in [](#model-scores).
 
 | Criterion       | Custom Types | SHACL | SPIN | OWL |
 | --------------- |:------------:|:-----:|:----:|:---:|
-| RDF Complexity  | ◯            | ◑     | ◉    | ◉   |
-| Expressivity    | ◯            | ◉     | ◑    | ☉   |
-| Composability   | ☉            | ◉     | ◉    | ◉   |
+| RDF Complexity  | ◌            | ◑     | ◉    | ◉   |
+| Expressivity    | ◯            | ◉     | ◑    | ◯   |
+| Composability   | ◯            | ◉     | ◉    | ◉   |
 | Discoverability | ◉            | ◑     | ◑    | ◑   |
-| Adoptability    | ◯            | ◉     | ◑    | ◉   |
+| Adoptability    | ◌            | ◉     | ◑    | ◉   |
 
 <figcaption markdown="block">
-Qualitative scores (very low ◯, low ☉, medium ◑, high ◉) for three different approaches for
+Qualitative scores (very low ◌, low ◯, medium ◑, high ◉) for three different approaches for
 declaring interface responses based on the model from [](#comparison-model).
 </figcaption>
 </figure>

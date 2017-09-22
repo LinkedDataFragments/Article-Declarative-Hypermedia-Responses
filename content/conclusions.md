@@ -36,6 +36,6 @@ This will for instance allow clients to select only the controls that will
 produce the response structure that the client can work with,
 or start preparing a response data structure _before_ the actual control response is even received.
 Nevertheless, future work is still required in this direction,
-to empirically validate the practisal feasibility of this approach.
+to empirically validate the practical feasibility of this approach.
 Furthermore, algorithms will need to be developed to efficiently generate such declarations server-side,
 and to work with them client-side.
