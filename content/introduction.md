@@ -13,6 +13,10 @@ in which HTTP resources are linked and described to each other,
 similar to how the human web works.
 In the case of pure REST APIs, _hypermedia controls_ declaratively instruct clients
 on how they can use an interface.
+<span class="placeholder printonly">
+<span style="display: block; height: 10em;"></span>
+<!-- This is a dummy placeholder for the ACM first page footnote -->
+</span>
 An advantage of REST over RPC is that these hypermedia controls
 are self-descriptive, and can be reused across different interfaces.
 Once they are implemented, clients can automatically interact with interfaces

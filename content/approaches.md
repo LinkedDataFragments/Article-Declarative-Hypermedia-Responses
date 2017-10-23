@@ -63,14 +63,6 @@ In our TPF use case, we could make our search form a parameterizable shape,
 and declare the triple pattern query as a [SPARQL](cite:citesAsAuthority spec:sparqllang) `SELECT` query,
 as shown in [](#approach-shacl).
 
-<figure id="approach-shacl" class="listing">
-````/code/approach-shacl.txt````
-<figcaption markdown="block">
-Triple pattern query response declaration using a SHACL shape
-that is a subclass of `sh:Parameterizable` and `sh:SPARQLSelectExecutable`.
-</figcaption>
-</figure>
-
 The interface input parameters and the response shape parameters are declared separately.
 The former is defined using Hydra, while the latter is defined using SHACL.
 As these parameters are—and should always be—equal for allowing output to be fully defined using input,
@@ -81,6 +73,14 @@ which means that the full expressivity of SHACL constraints can be used on these
 SHACL parameter names are, however, not defined in the same way as Hydra variable names.
 Hydra allows variable names to be set using the `hydra:variable` predicate.
 Instead, SHACL parameter names are derived from the IRI in `sh:path`.
+
+<figure id="approach-shacl" class="listing">
+````/code/approach-shacl.txt````
+<figcaption markdown="block">
+Triple pattern query response declaration using a SHACL shape
+that is a subclass of `sh:Parameterizable` and `sh:SPARQLSelectExecutable`.
+</figcaption>
+</figure>
 
 In summary, SHACL shapes are very expressive for declaring responses of Web APIs.
 Furthermore, the expressivity from the SPARQL query language and JavaScript are inherited thanks to
