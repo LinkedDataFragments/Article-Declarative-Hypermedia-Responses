@@ -1,6 +1,6 @@
 #!/bin/bash
 # Only publish from the main repository's master branch
-REPO_NAME="LinkedDataFragments/article-declarative-interface-responses"
+REPO_NAME="LinkedDataFragments/Article-Declarative-Hypermedia-Responses"
 if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then exit; fi
 echo -e "Generating gh-pages...\n"
 
