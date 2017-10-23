@@ -1,0 +1,10 @@
+<http://fragments.dbpedia.org/2014/en#dataset> hydra:search [
+    ...
+    a sp:Select;
+    sp:resultVariables ( ex:subject, ex:predicate, ex:object );
+    sp:where ([
+        sp:subject   ex:subject;
+        sp:predicate ex:predicate;
+        sp:object    ex:object
+    ]).
+].

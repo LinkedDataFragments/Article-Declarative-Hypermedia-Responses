@@ -1,0 +1,652 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Declaratively Describing Responses
+ of Hypermedia-Driven Web APIs</title>
+  <link rel="stylesheet" media="screen" href="styles/screen.css">
+  <link rel="stylesheet" media="print"  href="styles/print.css">
+</head>
+<body prefix="cc: https://creativecommons.org/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# opmw: http://www.opmw.org/ontology/">
+  <header>
+  <h1>Declaratively Describing Responses<br /> of Hypermedia-Driven Web APIs</h1>
+  <div id="repeating-title">Declaratively Describing Responses
+ of Hypermedia-Driven Web APIs</div>
+
+  <ul id="authors">
+    <li><a href="http://www.rubensworks.net/" typeof="http://xmlns.com/foaf/0.1/Person" resource="http://www.rubensworks.net/#me">Ruben Taelman</a></li>
+    <li><a href="https://ruben.verborgh.org/" typeof="http://xmlns.com/foaf/0.1/Person" resource="https://ruben.verborgh.org/profile/#me">Ruben Verborgh</a></li>
+  </ul>
+
+  <ul id="affiliations">
+    <li id="idlab">IDLab,
+          Department of Electronics and Information Systems,
+          Ghent University – imec</li>
+  </ul>
+
+</header>
+
+<div id="content">
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <!-- Context      -->
+    <p>While humans browse the Web by following links,
+these <em>hypermedia</em> links can also be used by machines for browsing.
+While efforts such as Hydra semantically describe
+the hypermedia controls on Web interfaces
+to enable smarter interface-agnostic clients,
+they are largely limited to the input parameters to interfaces,
+and clients therefore do not know what response to expect from these interfaces.
+<!-- Need         -->
+In order to convey such expectations,
+interfaces need to declaratively describe the response structure
+of their parameterized hypermedia controls.
+<!-- Task         -->
+We therefore explored techniques to represent this parameterized response structure
+in a generic but expressive way.
+<!-- Object       -->
+In this work, we discuss four different approaches for declaring a response structure,
+and we compare them based on a model that we introduce.
+<!-- Findings     -->
+<!-- Conclusion   -->
+Based on this model, we conclude that a <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> shape-based approach
+can be used for declaring such a parameterized response structure,
+as it conforms to the <span class='abbreviation' title='Representational State Transfer'>REST</span> architectural style that has helped shape the Web into its current form.
+<!-- Perspectives --></p>
+
+    <p><span class="printonly">
+    <span id="ccsconcepts"><span class="title">CCS CONCEPTS</span></span>
+<span style="font-weight:bold">• Information systems~Web interfaces   • Information systems~RESTful web services   • Information systems~Resource Description Framework (<span class='abbreviation' title='Resource Description Framework'>RDF</span>)</span>   • Information systems~Service discovery and interfaces   • Information systems~Web Ontology Language (<span class='abbreviation' title='Web Ontology Language'>OWL</span>)
+</span></p>
+
+    <p><span id="keywords"><span class="title">Keywords</span> Linked Data, Hypermedia, <span class='abbreviation' title='Representational State Transfer'>REST</span>, <span class='abbreviation' title='Resource Description Framework'>RDF</span>, <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>, Hydra</span></p>
+
+    <p><span class="printonly" id="acmreferenceformat">
+<span class="title">ACM Reference Format:</span>
+Taelman, R. and Verborgh, R. 2017. Declaratively Describing Responses of Hypermedia-Driven Web APIs. K-CAP 2017: K-CAP 2017: Knowledge Capture Conference, December 4 — 6, 2017, Austin, TX, USA, 4 pages.<br />
+DOI: 10.1145/3148011.3154467
+</span></p>
+
+    <p><span class="printonly firstpagefooter">
+<span class="footnotecopyright">
+——————————————————————<br />
+Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from Permissions@acm.org.<br />
+<span style="font-style:italic">K-CAP 2017, December 4–6, 2017, Austin, TX, USA</span><br />
+© 2017 Copyright is held by the owner/author(s). Publication rights licensed to ACM.
+ACM 978-1-4503-5553-7/17/12…$15.00<br />
+https://doi.org/10.1145/3148011.3154467
+</span>
+</span></p>
+
+  </section>
+
+
+<main>
+  <section id="introduction">
+      <h2>Introduction</h2>
+      <p>Humans can browse the Web by following <em>links</em> from one page to another.
+This <em>human</em> interface is only one of the possible Web interfaces that exist.
+Next to humans, machines also heavily make use of the Web
+through Web Application Programming Interfaces (Web APIs).
+Two architectural styles for Web APIs can be distinguished,
+where elements of them are sometimes combined in practise.
+First, some APIs are based on the concept of Remote Procedure Calling (<span class='abbreviation' title='Remote Procedure Calling'>RPC</span>),
+in which <span class='abbreviation' title='Hypertext Transfer Protocol'>HTTP</span> requests correspond to procedure or method calls of internal programs.
+Second, other APIs are based on Representational State Transfer (<span class='abbreviation' title='Representational State Transfer'>REST</span>) <a class="reference" href="#ref-1">[1]</a>,
+in which <span class='abbreviation' title='Hypertext Transfer Protocol'>HTTP</span> resources are linked and described to each other,
+similar to how the human web works.
+In the case of pure <span class='abbreviation' title='Representational State Transfer'>REST</span> APIs, <em>hypermedia controls</em> declaratively instruct clients
+on how they can use an interface.
+<span class="placeholder printonly">
+<span style="display: block; height: 10em;"></span>
+<!-- This is a dummy placeholder for the ACM first page footnote -->
+</span>
+An advantage of <span class='abbreviation' title='Representational State Transfer'>REST</span> over <span class='abbreviation' title='Remote Procedure Calling'>RPC</span> is that these hypermedia controls
+are self-descriptive, and can be reused across different interfaces.
+Once they are implemented, clients can automatically interact with interfaces
+through these self-descriptive hypermedia controls
+without having to refer to external documentation.
+However, self-descriptiveness is a <em>relative</em> notion:
+depending on the set of primitives supported by a client,
+an interface exposed by a server might or might not describe itself.</p>
+
+      <p>According to the Linked Data principles <a class="reference" href="#ref-2">[2]</a>,
+<span class='abbreviation' title='Hypertext Transfer Protocol'>HTTP</span> URIs should be used to identify concepts on the Semantic Web, which can be seen as <em>the Web for machines</em>.
+As the <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/"><span class='abbreviation' title='Resource Description Framework'>RDF</span></a> <a class="reference" href="#ref-3">[3]</a> data model uses URIs as primary data element,
+hypermedia controls can be encoded using this model, so that machines can use and understand them.
+Amundsen identifies nine <em>“Hypermedia Factors”</em> <a class="reference" href="#ref-4">[4]</a>
+to identify hypermedia behaviors.
+While <span class='abbreviation' title='Resource Description Framework'>RDF</span> natively supports the <em>outbound links</em> hypermedia factor,
+it provides no support for more advanced <em>templated links</em>.
+The latter corresponds to HTML forms on Web pages, such as a form for searching books through a library’s website.
+One part of the Hydra Core vocabulary <a class="reference" href="#ref-5">[5]</a> attempts to fill this gap
+by representing HTML controls as Linked Data for machines.</p>
+
+      <p>The Hydra Core vocabulary is for example used in the <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://linkeddatafragments.org/publications/jws2016.pdf">Triple Pattern Fragments (TPF)</a> <a class="reference" href="#ref-6">[6]</a> interface
+for describing a query form.
+TPF interfaces expose hypermedia controls that afford triple pattern queries on top of certain datasets.
+This allows clients to consume data from datasets that are exposed behind TPF interfaces using these self-descriptive controls,
+as shown in <a href="#tpf-controls">Listing 1</a>.
+In this example, the <code>hydra:search</code> predicate is used to link a search form to a dataset.
+This search form has an IRI template string which allows certain variables to be filled in.
+These variables are declared in the range of <code>hydra:mapping</code>,
+which are in this case <code>'s'</code>, <code>'p'</code> and <code>'o'</code>, which respectively are an
+<a property="http://purl.org/spar/cito/citesAsAuthority" href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/"><span class='abbreviation' title='Resource Description Framework'>RDF</span></a> <a class="reference" href="#ref-3">[3]</a> subject, predicate and object.</p>
+
+      <figure id="tpf-controls" class="listing">
+<pre><code>&lt;http://fragments.dbpedia.org/2014/en#dataset&gt; hydra:search [
+</code><code>    hydra:template &quot;http://fragments.dbpedia.org/2014/en{?s,p,o}&quot;;
+</code><code>    hydra:mapping [ hydra:variable &quot;s&quot;; hydra:property rdf:subject ],
+</code><code>                  [ hydra:variable &quot;p&quot;; hydra:property rdf:predicate ],
+</code><code>                  [ hydra:variable &quot;o&quot;; hydra:property rdf:object ]
+</code><code>].</code></pre>
+<figcaption>
+          <p><span class="label">Listing 1:</span> Declarative triple pattern query control on the DBpedia TPF interface using the Hydra Core Vocabulary in the TriG syntax.</p>
+        </figcaption>
+</figure>
+
+      <p>Without the Hydra Core Vocabulary, clients would need a hard-coded API contract.
+With this markup, clients can automatically understand that by providing a certain set of parameters,
+a certain request to the API can be made.
+However, the Hydra Core Vocabulary is not capable of describing the link’s <em>control data</em> <a class="reference" href="#ref-4">[4]</a>
+on <em>how</em> these parameters will be used,
+i.e., what kind of response will be returned based on the given request.
+In order to reach smarter clients, they also need to know in what way the parameters
+will contribute to the response.
+This would not only allow clients to derive <em>what</em> parameters are used for a certain request,
+but also <em>how</em> these parameters form the response.</p>
+
+      <p>In the case of TPF for example, the subject, predicate and object IRI parameters are described, which make up a triple pattern.
+It is however nowhere described that the interface necessarily returns all triples in the dataset that <em>match</em> with this pattern.
+The server could for example instead return all triples in the dataset that do <em>not match</em> with this pattern,
+or return the <em>lexicographical ordering</em> of the given parameter values,
+as there is no provided method for distinguishing between these different behaviours with the same input parameters.</p>
+
+      <p>In this article, we introduce and compare different approaches
+for describing the responses of such hypermedia-driven API responses.
+We discuss approaches based on custom vocabularies,
+the recent W3C recommendation <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/TR/2017/REC-shacl-20170720/"><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span></a> <a class="reference" href="#ref-7">[7]</a>,
+the <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://spinrdf.org/spin.html">SPIN modeling vocabulary</a> <a class="reference" href="#ref-8">[8]</a>,
+and the <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/TR/2012/REC-owl2-overview-20121211/">Web Ontology Language (<span class='abbreviation' title='Web Ontology Language'>OWL</span>)</a> <a class="reference" href="#ref-9">[9]</a>.</p>
+
+    </section>
+
+  <section id="related-work">
+      <h2>Related Work</h2>
+
+      <p>In this section, we introduce the related work on Web APIs and Web Services,
+followed by an overview of technologies for defining constraints in <span class='abbreviation' title='Resource Description Framework'>RDF</span>.</p>
+
+      <h3 id="web-apis-and-services">Web APIs and Services</h3>
+
+      <p>Next to the <span class='abbreviation' title='Representational State Transfer'>REST</span> architectural style, the SOAP protocol is often used for letting <em>Web Services</em> interoperate.
+Just, like <span class='abbreviation' title='Remote Procedure Calling'>RPC</span>, SOAP requires custom client-side implementation for each Web Service,
+which leads to tighter coupling between servers and clients,
+as opposed to the more generic <span class='abbreviation' title='Representational State Transfer'>REST</span> APIs.
+<a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/Submission/owl-s/"><span class='abbreviation' title='Web Ontology Language'>OWL</span>-S</a> <a class="reference" href="#ref-10">[10]</a> is a vocabulary for describing such Web Services.
+It allows services to declare their actions, how they can be used, and how they work.</p>
+
+      <p><a property="http://purl.org/spar/cito/citesAsAuthority" href="http://arxiv.org/abs/1609.07108">Verborgh et al. distinguish two types of Web APIs</a> <a class="reference" href="#ref-11">[11]</a>
+in terms of how they expose their functionality.
+The first type, which are mostly used today, is the <em>top-down</em> Web API.
+This kind of API exposes certain functionality through a <em>single</em> interface,
+and requires clients to understand this specific interface.
+The second type is the <em>bottom-up</em> Web API,
+where an API exposes different functionalities as different <em>features</em>,
+where each feature should describe its own <em>functionality</em>.
+The second kind of API leads to clients that are not bound to specific providers,
+but to specific reusable features.
+The concept of declaring the response structure is
+in line with these principles of feature-based interfaces.</p>
+
+      <h3 id="rdf-constraints"><span class='abbreviation' title='Resource Description Framework'>RDF</span> Constraints</h3>
+
+      <p><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> is a recent W3C recommended vocabulary that allows
+<span class='abbreviation' title='Resource Description Framework'>RDF</span> shapes to be defined and composed for constraint checking and validation.
+The <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://spinrdf.org/spin.html">SPIN vocabulary</a> <a class="reference" href="#ref-8">[8]</a> can be seen as the predecessor
+to <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> for specifying rules and constraints.
+It is more lightweight than <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>, but thereby also less expressive.
+The SPIN vocabulary is based on the <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> query language for defining these constraints,
+where triple patterns can be composed as graph patterns, which in turn can be composed as more complex graph patterns.
+Alternatively, <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/TR/2012/REC-owl2-overview-20121211/"><span class='abbreviation' title='Web Ontology Language'>OWL</span></a> <a class="reference" href="#ref-9">[9]</a> and <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/TR/2014/REC-rdf-schema-20140225/"><span class='abbreviation' title='Resource Description Framework'>RDF</span> Schema (RDFS)</a> <a class="reference" href="#ref-12">[12]</a>
+could be used to define constraints on certain targets.
+The main difference between <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> and <span class='abbreviation' title='Web Ontology Language'>OWL</span> is that <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> works under the <em>closed world assumption</em>,
+while <span class='abbreviation' title='Web Ontology Language'>OWL</span> works under the <em>open world assumption</em>.
+In practise, the latter makes data validation more complex, which is part of the motivation for <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>’s creation.</p>
+
+    </section>
+
+  <section id="comparison-model">
+      <h2>Model for Comparison</h2>
+
+      <p>In this section, we introduce a model for comparing approaches for declaratively representing Web API responses.
+Our model consists of different criteria that can influence the choice of a certain approach:
+<em><span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity</em>, <em>expressivity</em>, <em>composability</em>, <em>discoverability</em> and <em>adoptability</em>.
+These will be explained hereafter.
+Each representation approach can receive a qualitative score for each of these criteria.
+A suitable approach can then be chosen based on the composite score across these criteria,
+which can possibly be weighted depending on the relative importance of these criteria in the use case.</p>
+
+      <h3 id="rdf-complexity"><span class='abbreviation' title='Resource Description Framework'>RDF</span> Complexity</h3>
+
+      <p>The level of <span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity, i.e., how ‘deep’ the response structure is represented in <span class='abbreviation' title='Resource Description Framework'>RDF</span>,
+has an influence on how easily such a representation can be used by <span class='abbreviation' title='Resource Description Framework'>RDF</span>-based tools.</p>
+
+      <p>A response that is based on a <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> query could for example be represented as an <span class='abbreviation' title='Resource Description Framework'>RDF</span> string literal,
+or fully reified using the SPIN vocabulary.
+Both approaches have the same meaning, but the former representation requires less effort to represent in <span class='abbreviation' title='Resource Description Framework'>RDF</span>,
+while the latter provides better compatibility with <span class='abbreviation' title='Resource Description Framework'>RDF</span>-based tools, such as reasoners and query engines.
+If a subset of such a <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> query needs to be taken, an <span class='abbreviation' title='Resource Description Framework'>RDF</span> reasoner or query engine
+can more easily do this using the reified <span class='abbreviation' title='Resource Description Framework'>RDF</span> representation than the string literal.</p>
+
+      <h3 id="expressivity">Expressivity</h3>
+
+      <p>The expressivity of an approach for response declaration of an interface
+corresponds to the range of responses that can be declared using this approach.</p>
+
+      <p>According to the <span class='abbreviation' title='Representational State Transfer'>REST</span> principles and the layered architectural style,
+clients should require no prior knowledge
+about interface functionality except for the agreed-upon primitives.
+Simple and few primitives on the one hand lower the barrier for client support,
+such as the eight well known <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/Protocols/rfc2616/rfc2616.html"><span class='abbreviation' title='Hypertext Transfer Protocol'>HTTP</span></a> <a class="reference" href="#ref-13">[13]</a> methods on the protocol level.
+These primitives should however be sufficiently expressive,
+as to allow more advanced operations to be defined on top of them.
+Many complex and expressive primitives on the other hand
+make it more complex for clients to support them,
+but when they are supported, complex operations can more easily be interpreted by clients.</p>
+
+      <p>In the case of declaring interface responses,
+vocabularies can exist at different levels of expressivity.
+One vocabulary may for example only enable simple triple pattern queries to be represented,
+which may be simple for a client to parse and handle, but is not very expressive.
+Another vocabulary may enable full <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> queries to be represented,
+which may be more complex for a client to use, but is much more expressive.
+By following the <span class='abbreviation' title='Representational State Transfer'>REST</span> principles, a well-defined restricted vocabulary should be agreed upon
+using which, potentially complex, response types can be declared.</p>
+
+      <h3 id="composability">Composability</h3>
+
+      <p>As in a <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://arxiv.org/abs/1609.07108">feature-based interface</a> <a class="reference" href="#ref-11">[11]</a>,
+response structures can be made up of multiple smaller reusable components that can be <em>composed</em> and <em>extended</em>.
+This allows clients to only be required to understand these smaller components,
+and this could allow more complex composed response types to be interpreted automatically.
+Different techniques can lead to different levels of composability.</p>
+
+      <p>A certain Web API could for example return a list of people based on a certain query.
+Another similar Web API could annotate all these people with their place of birth,
+which can be seen as an <em>extension</em> to the first API,
+or a <em>composition</em> of the ‘query’ feature and the ‘annotation’ feature.
+Another composition could for example apply some kind of <em>sorting</em> or <em>filtering</em> feature,
+possibly based on certain parameters.</p>
+
+      <h3 id="discoverability">Discoverability</h3>
+
+      <p>Certain techniques for declaring response structure are more easily <em>discoverable</em> than others,
+meaning that based on the technique,
+clients may require more or less effort for <em>finding</em> and <em>interpreting</em> the response structure.
+A single text-based identifier for a reponse structure could for example be very simple for clients to detect,
+while a reference to the source code that is used to control the Web API requires much more effort from the client.</p>
+
+      <h3 id="adoptability">Adoptability</h3>
+
+      <p>While different approaches for Web API response types exist,
+the used technologies behind these approaches will have an impact on the adoption rate.
+The usage of a new, non-standard vocabulary will most likely lead to a lower adoption rate
+than the usage of vocabulary that is recommended by W3C.</p>
+
+    </section>
+
+  <section id="approaches">
+      <h2>Approaches for Declarative Response Description</h2>
+
+      <p>In this section, we discuss and compare different approaches
+for declaratively describing the responses of Web APIs based on given parameters.
+We will use the TPF use case as a running example.
+For this, we will extend from the hypermedia control from <a href="#tpf-controls">Listing 1</a>,
+which currently describes the interface input parameters,
+to describe the responses to triple pattern queries.</p>
+
+      <p>The four approaches that will be explained hereafter are
+Custom types, <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> shapes, SPIN <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> queries and <span class='abbreviation' title='Web Ontology Language'>OWL</span> restrictions.
+For each approach, we will provide a score for the model criteria from <a href="#comparison-model">Section 3</a>,
+which are summarized in <a href="#model-scores">Table 1</a>.</p>
+
+      <figure id="model-scores" class="table">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Criterion</th>
+              <th style="text-align: center">Custom Types</th>
+              <th style="text-align: center"><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span></th>
+              <th style="text-align: center">SPIN</th>
+              <th style="text-align: center"><span class='abbreviation' title='Web Ontology Language'>OWL</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class='abbreviation' title='Resource Description Framework'>RDF</span> Complexity</td>
+              <td style="text-align: center">◌</td>
+              <td style="text-align: center">◑</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◉</td>
+            </tr>
+            <tr>
+              <td>Expressivity</td>
+              <td style="text-align: center">◯</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◑</td>
+              <td style="text-align: center">◯</td>
+            </tr>
+            <tr>
+              <td>Composability</td>
+              <td style="text-align: center">◯</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◉</td>
+            </tr>
+            <tr>
+              <td>Discoverability</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◑</td>
+              <td style="text-align: center">◑</td>
+              <td style="text-align: center">◑</td>
+            </tr>
+            <tr>
+              <td>Adoptability</td>
+              <td style="text-align: center">◌</td>
+              <td style="text-align: center">◉</td>
+              <td style="text-align: center">◑</td>
+              <td style="text-align: center">◉</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <figcaption>
+          <p><span class="label">Table 1:</span> Qualitative scores (very low ◌, low ◯, medium ◑, high ◉) for three different approaches for
+declaring interface responses based on the model from <a href="#comparison-model">Section 3</a>.</p>
+        </figcaption>
+      </figure>
+
+      <h3 id="custom-types">Custom Types</h3>
+
+      <p>A simple solution is to define a new response type at vocabulary-level
+for each hypermedia control type that exists.
+For our use case, we could introduce a (hypothetical) <code>tpf:TriplePatternQueryResponse</code> type in a new <code>tpf</code> vocabulary,
+which refers to a triple pattern query, as shown in <a href="#approach-customtypes">Listing 2</a>.</p>
+
+      <figure id="approach-customtypes" class="listing">
+<pre><code>&lt;http://fragments.dbpedia.org/2014/en#dataset&gt; hydra:search [
+</code><code>    ...
+</code><code>    ex:responseType tpf:TriplePatternQueryResponse.
+</code><code>].</code></pre>
+<figcaption>
+          <p><span class="label">Listing 2:</span> Triple pattern query response declaration using a custom type,
+with <code>ex:responseType</code> referring to this type.</p>
+        </figcaption>
+</figure>
+
+      <p>The advantages of this approach are that it is very simple to set up,
+and is easily <em>discoverable</em>.
+However, it has some significant disadvantages.
+For one, as each response type requires a separate <span class='abbreviation' title='Resource Description Framework'>RDF</span> type,
+and clients need explicit support for a potentially huge number of types.
+Instead of having small reusable functional building blocks,
+new types have to be defined for each interface that offers different functionality.
+As opposed to indirect hierarchical types as is the case with <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://tools.ietf.org/html/rfc6838">MIME types</a> <a class="reference" href="#ref-14">[14]</a>,
+<span class='abbreviation' title='Resource Description Framework'>RDF</span> enables more explicit basic composition of types by attaching multiple types and subclassing.</p>
+
+      <h3 id="approach-shacl"><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> Shapes</h3>
+
+      <p>The <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> vocabulary is designed for defining shape constraints to validate <span class='abbreviation' title='Resource Description Framework'>RDF</span> graphs against,
+which allows us to describe the shape of our responses.
+In our TPF use case, we could make our search form a parameterizable shape,
+and declare the triple pattern query as a <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/"><span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span></a> <a class="reference" href="#ref-15">[15]</a> <code>SELECT</code> query,
+as shown in <a href="#approach-shacl">Listing 3</a>.</p>
+
+      <p>The interface input parameters and the response shape parameters are declared separately.
+The former is defined using Hydra, while the latter is defined using <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>.
+As these parameters are—and should always be—equal for allowing output to be fully defined using input,
+one of the two methods could be deprecated in favor of the other.
+The Hydra variables are simpler, but also less expressive.
+<span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> parameters are much more expressive because they are also <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> property shapes,
+which means that the full expressivity of <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> constraints can be used on these parameter values.
+<span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> parameter names are, however, not defined in the same way as Hydra variable names.
+Hydra allows variable names to be set using the <code>hydra:variable</code> predicate.
+Instead, <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> parameter names are derived from the IRI in <code>sh:path</code>.</p>
+
+      <figure id="approach-shacl" class="listing">
+<pre><code>&lt;http://fragments.dbpedia.org/2014/en#dataset&gt; hydra:search [
+</code><code>    ...
+</code><code>    sh:parameter [ sh:path ex:subject;   sh:order 0; sh:nodeKind sh:BlankNodeOrIRI ],
+</code><code>                 [ sh:path ex:predicate; sh:order 1; sh:nodeKind sh:IRI ],
+</code><code>                 [ sh:path ex:object;    sh:order 2 ];
+</code><code>    sh:select &quot;&quot;&quot; SELECT  ?subject ?predicate ?object
+</code><code>                  WHERE { ?subject ?predicate ?object } &quot;&quot;&quot;.
+</code><code>].</code></pre>
+<figcaption>
+          <p><span class="label">Listing 3:</span> Triple pattern query response declaration using a <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> shape
+that is a subclass of <code>sh:Parameterizable</code> and <code>sh:SPARQLSelectExecutable</code>.</p>
+        </figcaption>
+</figure>
+
+      <p>In summary, <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> shapes are very expressive for declaring responses of Web APIs.
+Furthermore, the expressivity from the <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> query language and JavaScript are inherited thanks to
+the <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> extensions <a href="https://www.w3.org/TR/2017/REC-shacl-20170720/#sparql-constraints"><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>-<span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span></a>
+and <a href="https://www.w3.org/TR/2017/NOTE-shacl-js-20170608/"><span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>-JS</a>.</p>
+
+      <h3 id="spin-sparql-queries">SPIN <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> Queries</h3>
+
+      <p>The <a property="http://purl.org/spar/cito/citesAsAuthority" href="http://spinrdf.org/spin.html">SPIN vocabulary</a> <a class="reference" href="#ref-8">[8]</a> allows <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> queries to be defined in a triple representation,
+which <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> does not support.
+The advantage of triple-based representations over text-based is that <span class='abbreviation' title='Resource Description Framework'>RDF</span>-based tools
+can directly use and work with these structures, such as reasoners and query engines.
+The disadvantage of triple-based representations is their verbosity compared to a text-based variant.</p>
+
+      <p>As our TPF use case requires the representation of a triple pattern query,
+we can again trivially represent this as a <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> SELECT query using SPIN,
+as shown in <a href="#approach-spin">Listing 4</a>.</p>
+
+      <figure id="approach-spin" class="listing">
+<pre><code>&lt;http://fragments.dbpedia.org/2014/en#dataset&gt; hydra:search [
+</code><code>    ...
+</code><code>    a sp:Select;
+</code><code>    sp:resultVariables ( ex:subject, ex:predicate, ex:object );
+</code><code>    sp:where ([
+</code><code>        sp:subject   ex:subject;
+</code><code>        sp:predicate ex:predicate;
+</code><code>        sp:object    ex:object
+</code><code>    ]).
+</code><code>].</code></pre>
+<figcaption>
+          <p><span class="label">Listing 4:</span> Triple pattern query response declaration using a <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> SELECT query using the SPIN vocabulary.</p>
+        </figcaption>
+</figure>
+
+      <p>As mentioned before, the SPIN-based query in <a href="#approach-spin">Listing 4</a> is indeed
+more verbose than the <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>-<span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> SELECT query from <a href="#approach-shacl">Listing 3</a>.
+That is because SPIN reifies triple patterns,
+which leads to a large amount of triples, even for simple queries.</p>
+
+      <p>As our subject, predicate and object variables are now represented as actual resources,
+they are explicitly linked with the Hydra variables, which is a semantic advantage.</p>
+
+      <h3 id="owl-restrictions"><span class='abbreviation' title='Web Ontology Language'>OWL</span> Restrictions</h3>
+
+      <p>While <a property="http://purl.org/spar/cito/citesAsAuthority" href="https://www.w3.org/TR/2012/REC-owl2-overview-20121211/"><span class='abbreviation' title='Web Ontology Language'>OWL</span></a> <a class="reference" href="#ref-9">[9]</a> allows restrictions to be placed on <span class='abbreviation' title='Resource Description Framework'>RDF</span> graphs,
+it can not do this at the same level of expressivity as <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>.
+Furthermore, the open world assumption on which <span class='abbreviation' title='Web Ontology Language'>OWL</span> is based makes it more difficult to describe the closed world of Web API responses.</p>
+
+      <p>Our TPF use case can for instance not be represented using <span class='abbreviation' title='Web Ontology Language'>OWL</span> restrictions,
+because <span class='abbreviation' title='Web Ontology Language'>OWL</span> restrictions work on class structures, but not on triple structures.
+That is because <span class='abbreviation' title='Web Ontology Language'>OWL</span> has been designed for <em>inferencing</em>, and not for defining arbitrary constraints on <span class='abbreviation' title='Resource Description Framework'>RDF</span> graphs.
+Other operations such as type restrictions on instances,
+or defining the cardinality of certain aspects are however possible.</p>
+
+    </section>
+
+  <section id="discussion">
+      <h2>Discussion</h2>
+
+      <p>Based on our model from <a href="#comparison-model">Section 3</a>, there are different ways for choosing between the discussed approaches from <a href="#approaches">Section 4</a>.
+There is no one approach that is the <em>winner</em> across all criteria:
+an appropriate approach depends on the situation.
+In this section, we discuss the arguments for preferring certain criteria over others,
+and which approaches may be best suited in certain situations.</p>
+
+      <p>In many cases, the <em>adoption</em> rate would be of great importance,
+unless the approach would be used in a closed environment,
+which makes declarative response types less useful in the first place.
+According to the <a property="http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/2014/NOTE-ld-bp-20140109/">best practises for publishing Linked Data</a> <a class="reference" href="#ref-16">[16]</a>,
+standard vocabularies –such as <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>– should be reused as much as possible,
+because this helps with the inclusion in the Web of data and these typically have better tool support.</p>
+
+      <p>Responses should be declared at a sufficient level of <em>expressivity</em>,
+as long as clients are able to interpret them.
+Chances of this are higher when standard vocabularies are used,
+because of the better tool support.
+Therefore, adoption rate is typically prioritized over expressivity.
+<span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> for instance provides a higher level of expressivity than <span class='abbreviation' title='Web Ontology Language'>OWL</span>,
+while they are both standard vocabularies.</p>
+
+      <p>A response declaration can be defined in an expressive way,
+but as long as clients are not able to <em>discover</em> it,
+it is of not much use.
+Custom types are for example very easily discoverable.
+More expressive response structures may be more complex and difficult to discover,
+which is why a trade-off between those two criteria exists.</p>
+
+      <p>The <em>composability</em> criterion is related to expressivity and discoverability.
+If an approach allows very few and simple building blocks to be combined to reach a high level of expressivity,
+clients require less hard-coded support for these building blocks, which benefits the discoverability.
+Approaches that do not allow composability will require more of these building blocks to
+achieve a high level of expressivity, which can negatively impact discoverability.
+The composability of the approaches based on <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>, SPIN and <span class='abbreviation' title='Web Ontology Language'>OWL</span>
+is for instance much higher than that of custom types,
+because the latter have no standard building blocks.</p>
+
+      <p>When <span class='abbreviation' title='Resource Description Framework'>RDF</span>-based tools are required for
+handling the response declarations, <em><span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity</em> is important.
+Nevertheless, even where non-<span class='abbreviation' title='Resource Description Framework'>RDF</span> representations are used,
+<span class='abbreviation' title='Resource Description Framework'>RDF</span>-based tool processing could still be done by reifying to <span class='abbreviation' title='Resource Description Framework'>RDF</span> in a postprocessing step.
+SPIN and <span class='abbreviation' title='Web Ontology Language'>OWL</span> are examples where responses can be expressed purely in <span class='abbreviation' title='Resource Description Framework'>RDF</span>,
+while <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>-<span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> encodes <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> queries as <span class='abbreviation' title='Resource Description Framework'>RDF</span> literals.
+The <span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity is related to the composability of an approach,
+as small building blocks that are defined in granular <span class='abbreviation' title='Resource Description Framework'>RDF</span> statements,
+can potentially be reused as part of other more complex and possibly more expressive declarations.
+A high level of <span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity can however negatively impact discoverability due to the higher required interpretation effort.</p>
+
+      <p>As mentioned before, choosing an appropriate approach depends on the situation.
+For instance, if we require an approach that is based on standards,
+is expressive, discoverable and is made up of easily composable building blocks,
+then the <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> shapes approach is best suited.
+But if we require an approach that has a high level of <span class='abbreviation' title='Resource Description Framework'>RDF</span> complexity and is sufficiently expressive,
+then the SPIN-based approach could be sufficient.
+Otherwise, if we value discoverability over adoptability, then custom types might be preferred.</p>
+
+    </section>
+
+  <section id="conclusions">
+      <h2>Conclusions</h2>
+
+      <p>Much of the Web’s current hypermedia control response types are left to the client’s interpretation,
+which could be done using custom types.
+This approach is however hard to sustain, as it leads requires new types for each new response type,
+and leads to tight client-server coupling.
+If we want to have sustainable and declarative hypermedia response definitions on the Web,
+a technique is required that revolves around standards with an adequate level of expressivity and composability,
+but is not too difficult for clients to work with.</p>
+
+      <p>The <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>-based approach that we introduce in this work adheres to these requirements.
+It allows implementing the self-descriptive message constraint of the <span class='abbreviation' title='Representational State Transfer'>REST</span> style in a sustainable way across APIs.
+It is based on simple building blocks that make it easy for clients to discover and interpret them,
+and these building blocks can be combined for reaching a higher level of expressivity.
+Furthermore, as <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> is a W3C recommendation, it can lead to a higher adoption rate.
+Practical usage of this approach is already possible without any new vocabularies.
+If servers expose the <em>shape</em> of their control responses,
+clients that <em>understand</em> <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> and Hydra can interpret this to determine if this control is useful for them.</p>
+
+      <p>A response declaration can be seen as the server’s <em>suggested</em> way
+of consuming the data behind a control, but not necessarily the only way.
+<a property="http://purl.org/spar/cito/cites" href="https://www.w3.org/2017/dxwg/wiki/Main_Page">Profile-based negotiation</a> <a class="reference" href="#ref-17">[17]</a> on controls can provide <em>multiple dimensions</em> on how this data can be consumed,
+by allowing clients to ask the server for returning the data in a different <em>application profile</em>,
+which may be more convenient for the client to work with.</p>
+
+      <p>With such a hypermedia control extension, clients are able
+to known not only what the <em>input</em> of a control is,
+but also what kind of data is returned as <em>output</em> based on certain input.
+This information is vital for any kind of operation,
+just like typed programming languages require declaration
+of both the input and output types of operations.
+This extension will enable autonomous clients to work with such controls in a better way,
+as they will be able to know what output to expect from a certain control.
+This will for instance allow clients to select only the controls that will
+produce the response structure that the client can work with,
+or start preparing a response data structure <em>before</em> the actual control response is even received.
+Nevertheless, future work is still required in this direction,
+to empirically validate the practical feasibility of this approach.
+Furthermore, algorithms will need to be developed to efficiently generate such declarations server-side,
+and to work with them client-side.</p>
+
+    </section>
+
+</main>
+
+<footer>
+  <section id="acknowledgements">
+      <h2>Acknowledgements</h2>
+
+      <p>We would like to thank Holger Knublauch for providing his insights into the <span class='abbreviation' title='Shapes Constraint Language'>SHACL</span> declarations.
+The described research activities were funded by Ghent University, imec,
+Flanders Innovation &amp; Entrepreneurship (AIO), and the European Union.
+Ruben Verborgh is a postdoctoral fellow of the Research Foundation – Flanders.</p>
+
+    </section>
+
+<section id="references">
+<h2>References</h2>
+<dl class="references">
+  <dt id="ref-1">[1]</dt>
+  <dd>Fielding, R.T., Taylor, R.N.: Architectural styles and the design of network-based software architectures. University of California, Irvine Doctoral dissertation (2000).</dd>
+  <dt id="ref-2">[2]</dt>
+  <dd>Bizer, C., Heath, T., Berners-Lee, T.: Linked Data - the story so far. Semantic Services, Interoperability and Web Applications: Emerging Concepts. 205–227 (2009).</dd>
+  <dt id="ref-3">[3]</dt>
+  <dd>Cyganiak, R., Wood, D., Lanthaler, M.: <span class='abbreviation' title='Resource Description Framework'>RDF</span> 1.1: Concepts and Abstract Syntax. W3C, <a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">http:/​/​www.w3.org/TR/2014/REC-rdf11-concepts-20140225/</a> (2014).</dd>
+  <dt id="ref-4">[4]</dt>
+  <dd>Amundsen, M.: Hypermedia Types. In: <span class='abbreviation' title='Representational State Transfer'>REST</span>: From Research to Practice. pp. 93–116. Springer (2011).</dd>
+  <dt id="ref-5">[5]</dt>
+  <dd>Lanthaler, M., Gütl, C.: Hydra: A Vocabulary for Hypermedia-Driven Web APIs. LDOW. 996, (2013).</dd>
+  <dt id="ref-6">[6]</dt>
+  <dd>Verborgh, R., Vander Sande, M., Hartig, O., Van Herwegen, J., De Vocht, L., De Meester, B., Haesendonck, G., Colpaert, P.: Triple Pattern Fragments: a Low-cost Knowledge Graph Interface for the Web. Journal of Web Semantics. 37–38, (2016).</dd>
+  <dt id="ref-7">[7]</dt>
+  <dd>Knublauch, H., Kontokostas, D.: Shapes Constraint Language (<span class='abbreviation' title='Shapes Constraint Language'>SHACL</span>). W3C, <a href="https://www.w3.org/TR/2017/REC-shacl-20170720/">https:/​/​www.w3.org/TR/2017/REC-shacl-20170720/</a> (2017).</dd>
+  <dt id="ref-8">[8]</dt>
+  <dd>Knublauch, H.: SPIN - Modeling Vocabulary. W3C Member Submission. 22, (2011).</dd>
+  <dt id="ref-9">[9]</dt>
+  <dd>Group, W.C.O.W.L.W.: <span class='abbreviation' title='Web Ontology Language'>OWL</span> 2 Web Ontology Language. W3C, <a href="https://www.w3.org/TR/2012/REC-owl2-overview-20121211/">https:/​/​www.w3.org/TR/2012/REC-owl2-overview-20121211/</a> (2012).</dd>
+  <dt id="ref-10">[10]</dt>
+  <dd>Martin, D., Burstein, M., Hobbs, J., Lassila, O., McDermott, D., McIlraith, S., Narayanan, S., Paolucci, M., Parsia, B., Payne, T., others: <span class='abbreviation' title='Web Ontology Language'>OWL</span>-S: Semantic markup for web services. W3C, <a href="https://www.w3.org/Submission/owl-s/">https:/​/​www.w3.org/Submission/owl-s/</a> (2004).</dd>
+  <dt id="ref-11">[11]</dt>
+  <dd>Verborgh, R., Dumontier, M.: A Web API ecosystem through feature-based reuse. CoRR. abs/1609.07108, (2016).</dd>
+  <dt id="ref-12">[12]</dt>
+  <dd>Brickley, D., Guha, R.V.: <span class='abbreviation' title='Resource Description Framework'>RDF</span> Schema 1.1. W3C, <a href="https://www.w3.org/TR/2014/REC-rdf-schema-20140225/">https:/​/​www.w3.org/TR/2014/REC-rdf-schema-20140225/</a> (2004).</dd>
+  <dt id="ref-13">[13]</dt>
+  <dd>Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., Berners-Lee, T.: Hypertext transfer protocol – <span class='abbreviation' title='Hypertext Transfer Protocol'>HTTP</span>/1.1. <a href="https://www.w3.org/Protocols/rfc2616/rfc2616.html">https:/​/​www.w3.org/Protocols/rfc2616/rfc2616.html</a> (1999).</dd>
+  <dt id="ref-14">[14]</dt>
+  <dd>Freed, N., Klensin, J., Hansen, T.: Media type specifications and registration procedures. <a href="https://tools.ietf.org/html/rfc6838">https:/​/​tools.ietf.org/html/rfc6838</a> (2013).</dd>
+  <dt id="ref-15">[15]</dt>
+  <dd>Harris, S., Seaborne, A., Prud’hommeaux, E.: <span class='abbreviation' title='SPARQL Procotol and RDF Query Language'>SPARQL</span> 1.1 Query Language. W3C, <a href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/">http:/​/​www.w3.org/TR/2013/REC-sparql11-query-20130321/</a> (2013).</dd>
+  <dt id="ref-16">[16]</dt>
+  <dd>Hyland, B., Atemezing, G., Villazón-Terrazas, B.: Best Practices for Publishing Linked Data. W3C, <a href="https://www.w3.org/TR/2014/NOTE-ld-bp-20140109/">https:/​/​www.w3.org/TR/2014/NOTE-ld-bp-20140109/</a> (2014).</dd>
+  <dt id="ref-17">[17]</dt>
+  <dd>Dataset Exchange Working Group (DXWG). <a href="https://www.w3.org/2017/dxwg/wiki/Main_Page">https:/​/​www.w3.org/2017/dxwg/wiki/Main_Page</a> (2017).</dd>
+</dl>
+</section>
+</footer>
+
+</div>
+
+
+
+</body>
+</html>
