@@ -164,6 +164,12 @@ hyphens:none;
   margin-top: 0.6em;
 }
 
+header {
+  .actions, .context {
+    display: none;
+  }
+}
+
 table, img, object, iframe, figure, audio, video, canvas { page-break-inside:avoid; }
 object, iframe {
 width:100% !important;
