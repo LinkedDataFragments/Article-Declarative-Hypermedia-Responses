@@ -1,0 +1,8 @@
+1: (weak accept)
+The paper presents four approaches to represent a response structure needed for describing what response to expect from hypermedia interfaces in a way that allows machines to browse hypermedia links (like human).
+
+I actually like the topic of the paper and feel that this should be given a chance to the presented in the conference. Nevertheless, I find two issues that should be addressed. 
+
+First, there is no clear explanation what response structure is (and what is not). This makes it difficult to understand why and to what extent the four approaches are capable of representing the response structure. This may be just an issue of lack of space, but nevertheless, a more clear explanation would be much more useful/helpful.
+
+Second, I don't quite understand why OWL needs to be included for comparison. It is clearly intended for different purposes than the one that the authors have in mind (for writing constraints on RDF graphs). It is of course still possible that OWL can describe the response structure, but it is hard to see if this is indeed the case without having a clear explanation what response structure is.
